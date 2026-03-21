@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'DM Serif Display', ui-serif, Georgia, serif;
+  --color-bg: #0a0a0a;
+  --color-surface: rgba(24, 24, 27, 0.55);
+  --color-border: rgba(63, 63, 70, 0.6);
+  --color-accent: #10b981;
+  --color-glow: #064e3b;
+}
+
+/**
+ * Hide vertical/horizontal scrollbars everywhere (Windows Chrome/Edge + Firefox + Safari).
+ * Uses @layer base so Tailwind preflight doesn’t win the cascade.
+ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scrollbar-width: none !important;
+    scrollbar-color: transparent transparent;
+    -ms-overflow-style: none !important;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--color-bg);
+    color: #fafafa;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    scrollbar-width: none !important;
+    scrollbar-color: transparent transparent;
+    -ms-overflow-style: none !important;
+  }
+
+  #root {
+    min-height: 100%;
+    overflow-x: hidden;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  #root::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+    background: transparent !important;
+  }
+
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-thumb {
+    background: transparent !important;
+  }
+}
+
+::selection {
+  background: rgba(16, 185, 129, 0.35);
+  color: #fff;
+}
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-none px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20;
+  }
+
+  /** Same teal gradient as About / Projects sections */
+  .section-bg-teal {
+    background-image: linear-gradient(135deg, #2e7f73, #1f5f5a, #0f2f33);
+  }
+}
