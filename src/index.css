@@ -16,7 +16,8 @@
  */
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* `smooth` here fights scroll-linked JS and fixed UI; nav still uses scrollIntoView({ behavior: 'smooth' }). */
+    scroll-behavior: auto;
     overflow-x: hidden;
     scrollbar-width: none !important;
     scrollbar-color: transparent transparent;

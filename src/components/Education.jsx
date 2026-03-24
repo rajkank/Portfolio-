@@ -44,7 +44,7 @@ export default function Education() {
           variants={listVariants}
           initial={reduce ? 'visible' : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-12% 0px' }}
+          viewport={{ once: true, margin: '-8% 0px', amount: 0.15 }}
         >
           {/* Left spine — only in this section */}
           <div

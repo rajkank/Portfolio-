@@ -1,3 +1,4 @@
+import PageLoader from './components/PageLoader.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
@@ -12,6 +13,7 @@ import BackgroundGlow from './components/BackgroundGlow.jsx'
 export default function App() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#0a0a0a] text-zinc-100">
+      <PageLoader />
       <BackgroundGlow />
       <Navbar />
       <main>

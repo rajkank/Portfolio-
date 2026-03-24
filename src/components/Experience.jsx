@@ -37,11 +37,11 @@ export default function Experience() {
                 className="relative pl-0 sm:pl-2 md:pl-0"
                 initial={reduce ? false : { opacity: 0, y: 48 }}
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-12% 0px -8% 0px' }}
+                viewport={{ once: true, margin: '-10% 0px -6% 0px', amount: 0.15 }}
                 transition={{
-                  duration: 0.65,
-                  delay: index * 0.1,
-                  ease: [0.22, 1, 0.36, 1],
+                  duration: 0.52,
+                  delay: index * 0.08,
+                  ease: [0.25, 0.1, 0.25, 1],
                 }}
               >
                 {/* Step node */}

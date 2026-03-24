@@ -54,28 +54,18 @@ const fadeUp = {
   },
 }
 
-/** Slow slide from right, then eases into final position */
+/** Portrait entrance: eased tween (no spring overshoot) for a smooth settle */
 const imageReveal = {
-  hidden: { opacity: 0, x: 88, scale: 0.93 },
+  hidden: { opacity: 0, x: 48, scale: 0.96 },
   visible: {
     opacity: 1,
     x: 0,
     scale: 1,
     transition: {
-      delay: 0.18,
-      opacity: { duration: 0.55, ease },
-      x: {
-        type: 'spring',
-        stiffness: 52,
-        damping: 22,
-        mass: 0.95,
-      },
-      scale: {
-        type: 'spring',
-        stiffness: 52,
-        damping: 22,
-        mass: 0.95,
-      },
+      delay: 0.16,
+      opacity: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] },
+      x: { duration: 0.95, ease: [0.16, 1, 0.3, 1] },
+      scale: { duration: 0.95, ease: [0.16, 1, 0.3, 1] },
     },
   },
 }
@@ -92,11 +82,21 @@ export default function Hero() {
 
   const pointerX = useMotionValue(0.5)
   const pointerY = useMotionValue(0.5)
-  const springX = useSpring(pointerX, { stiffness: 280, damping: 32, mass: 0.55 })
-  const springY = useSpring(pointerY, { stiffness: 280, damping: 32, mass: 0.55 })
+  const springX = useSpring(pointerX, {
+    stiffness: 160,
+    damping: 44,
+    mass: 0.65,
+    restDelta: 0.001,
+  })
+  const springY = useSpring(pointerY, {
+    stiffness: 160,
+    damping: 44,
+    mass: 0.65,
+    restDelta: 0.001,
+  })
 
-  const tiltRotateY = useTransform(springX, [0, 1], [-7, 7])
-  const tiltRotateX = useTransform(springY, [0, 1], [6.5, -6.5])
+  const tiltRotateY = useTransform(springX, [0, 1], [-5, 5])
+  const tiltRotateX = useTransform(springY, [0, 1], [4.5, -4.5])
 
   const onPortraitPointerMove = (e) => {
     if (reduce || !portraitRef.current) return
@@ -112,11 +112,20 @@ export default function Hero() {
 
   useEffect(() => {
     const hero = document.getElementById('hero')
+    let ticking = false
     const onScroll = () => {
-      if (!hero) return
-      const rect = hero.getBoundingClientRect()
-      const stillInHero = rect.bottom > 80 && rect.top < window.innerHeight * 0.92
-      setHeroLineVisible(stillInHero)
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        if (!hero) {
+          ticking = false
+          return
+        }
+        const rect = hero.getBoundingClientRect()
+        const stillInHero = rect.bottom > 80 && rect.top < window.innerHeight * 0.92
+        setHeroLineVisible((prev) => (prev === stillInHero ? prev : stillInHero))
+        ticking = false
+      })
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -133,16 +142,16 @@ export default function Hero() {
   const textHover = reduce
     ? undefined
     : {
-        y: -5,
-        transition: { type: 'spring', stiffness: 380, damping: 28 },
+        y: -4,
+        transition: { type: 'spring', stiffness: 280, damping: 32, mass: 0.9 },
       }
 
   const imageHover = reduce
     ? undefined
     : {
-        y: -8,
-        scale: 1.02,
-        transition: { type: 'spring', stiffness: 320, damping: 24 },
+        y: -5,
+        scale: 1.012,
+        transition: { type: 'spring', stiffness: 220, damping: 36, mass: 0.85 },
       }
 
   return (
@@ -237,16 +246,17 @@ export default function Hero() {
               reduce
                 ? undefined
                 : {
-                    y: [0, -6, 0],
+                    y: [0, -5],
                   }
             }
             transition={
               reduce
                 ? undefined
                 : {
-                    duration: 5.5,
+                    duration: 6.5,
                     repeat: Infinity,
-                    ease: 'easeInOut',
+                    repeatType: 'mirror',
+                    ease: [0.45, 0, 0.55, 1],
                   }
             }
           >
@@ -256,33 +266,35 @@ export default function Hero() {
                 <motion.span
                   className="pointer-events-none absolute -inset-3 rounded-[2.75rem] border border-emerald-400/25 sm:-inset-4"
                   aria-hidden
-                  animate={{ scale: [1, 1.06], opacity: [0.45, 0] }}
+                  animate={{ scale: [1, 1.05], opacity: [0.4, 0] }}
                   transition={{
-                    duration: 2.8,
+                    duration: 3.4,
                     repeat: Infinity,
-                    ease: 'easeOut',
+                    repeatDelay: 0.2,
+                    ease: [0.4, 0, 0.2, 1],
                   }}
                 />
                 <motion.span
                   className="pointer-events-none absolute -inset-3 rounded-[2.75rem] border border-teal-400/20 sm:-inset-4"
                   aria-hidden
-                  animate={{ scale: [1, 1.08], opacity: [0.35, 0] }}
+                  animate={{ scale: [1, 1.06], opacity: [0.32, 0] }}
                   transition={{
-                    duration: 2.8,
+                    duration: 3.4,
                     repeat: Infinity,
-                    ease: 'easeOut',
-                    delay: 0.9,
+                    repeatDelay: 0.2,
+                    delay: 1.1,
+                    ease: [0.4, 0, 0.2, 1],
                   }}
                 />
               </>
             )}
 
             <motion.div
-              className="relative origin-center [transform-style:preserve-3d]"
+              className="relative origin-center will-change-transform [transform-style:preserve-3d]"
               style={{
                 rotateX: reduce ? 0 : tiltRotateX,
                 rotateY: reduce ? 0 : tiltRotateY,
-                rotateZ: reduce ? 0 : -2,
+                rotateZ: reduce ? 0 : -1.5,
                 transformPerspective: 960,
               }}
             >
@@ -301,7 +313,7 @@ export default function Hero() {
                         'conic-gradient(from 0deg, rgba(52,211,153,0.5), transparent 28%, rgba(20,184,166,0.35), transparent 62%, rgba(52,211,153,0.45))',
                     }}
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
+                    transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
                     aria-hidden
                   />
                 )}
@@ -318,14 +330,14 @@ export default function Hero() {
                         aria-hidden
                       >
                         <motion.div
-                          className="absolute -left-[40%] top-0 h-full w-[45%] skew-x-[-14deg] bg-gradient-to-r from-transparent via-white/16 to-transparent opacity-70"
+                          className="absolute -left-[40%] top-0 h-full w-[45%] skew-x-[-14deg] bg-gradient-to-r from-transparent via-white/14 to-transparent opacity-60"
                           initial={false}
-                          animate={{ x: ['-30%', '220%'] }}
+                          animate={{ x: ['-35%', '200%'] }}
                           transition={{
-                            duration: 1.85,
+                            duration: 2.2,
                             repeat: Infinity,
-                            repeatDelay: 4.2,
-                            ease,
+                            repeatDelay: 5,
+                            ease: [0.33, 0, 0.2, 1],
                           }}
                         />
                       </motion.div>
@@ -333,7 +345,7 @@ export default function Hero() {
                     <img
                       src={site.profileImage}
                       alt={`${site.name}, ${site.title}`}
-                      className="relative z-0 aspect-[3/4] w-full object-cover object-[center_12%] transition-transform duration-500 ease-out group-hover:scale-[1.045]"
+                      className="relative z-0 aspect-[3/4] w-full object-cover object-[center_12%] transition-transform duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.03]"
                       width={400}
                       height={534}
                       loading="eager"
@@ -380,7 +392,7 @@ export default function Hero() {
                 scaleX: heroLineVisible ? 1 : 0.4,
               }
         }
-        transition={{ duration: 0.45, ease }}
+        transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
         style={{ transformOrigin: 'center' }}
       >
         <div className="mx-auto h-px max-w-6xl bg-gradient-to-r from-transparent via-white/55 to-transparent sm:max-w-4xl lg:max-w-5xl" />

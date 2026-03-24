@@ -59,7 +59,7 @@ export default function Skills() {
           variants={container}
           initial={reduce ? 'visible' : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={{ once: true, margin: '-8% 0px', amount: 0.15 }}
         >
           {skillCategories.map((cat) => {
             const Icon = iconById[cat.id] ?? Code2

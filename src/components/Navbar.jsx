@@ -14,7 +14,16 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const next = window.scrollY > 24
+        setScrolled((prev) => (prev === next ? prev : next))
+        ticking = false
+      })
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -31,7 +40,7 @@ export default function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-50 flex flex-col transition-[background,box-shadow,border-color] duration-300 ${
         scrolled
-          ? 'border-b border-zinc-800/80 bg-zinc-950/75 shadow-lg shadow-black/20 backdrop-blur-xl'
+          ? 'border-b border-zinc-800/80 bg-zinc-950/80 shadow-lg shadow-black/20 backdrop-blur-md'
           : 'border-b border-white/12 bg-transparent shadow-[0_1px_0_0_rgba(255,255,255,0.06)]'
       }`}
     >
@@ -90,7 +99,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="border-b border-zinc-800/80 bg-zinc-950/95 backdrop-blur-xl md:hidden"
+            className="border-b border-zinc-800/80 bg-zinc-950/95 backdrop-blur-md md:hidden"
           >
             <div className="page-container flex flex-col gap-1 pb-4 pt-1">
               {navLinks.map((link) => (

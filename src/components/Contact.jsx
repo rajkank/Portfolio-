@@ -68,12 +68,12 @@ export default function Contact() {
           variants={container}
           initial={reduce ? 'visible' : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={{ once: true, margin: '-8% 0px', amount: 0.15 }}
         >
           {/* Direct lines */}
           <motion.div variants={item} className="group/card relative mb-8">
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-emerald-500/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/card:opacity-100" />
-            <div className="relative rounded-2xl border border-zinc-800/90 bg-zinc-900/50 p-6 shadow-lg shadow-black/20 backdrop-blur-md sm:p-8">
+            <div className="relative rounded-2xl border border-zinc-800/90 bg-zinc-900/55 p-6 shadow-lg shadow-black/20 backdrop-blur-sm sm:p-8 lg:bg-zinc-900/50 lg:backdrop-blur-md">
               <p className="text-sm text-zinc-400">
                 Prefer email? I typically reply within a day. For a quick intro, mention the kind of AI
                 problem you’re solving.
