@@ -38,7 +38,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 flex flex-col transition-[background,box-shadow,border-color] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 flex flex-col pt-[env(safe-area-inset-top,0px)] transition-[background,box-shadow,border-color] duration-300 ${
         scrolled
           ? 'border-b border-zinc-800/80 bg-zinc-950/80 shadow-lg shadow-black/20 backdrop-blur-md'
           : 'border-b border-white/12 bg-transparent shadow-[0_1px_0_0_rgba(255,255,255,0.06)]'
@@ -101,7 +101,7 @@ export default function Navbar() {
             transition={{ duration: 0.25 }}
             className="border-b border-zinc-800/80 bg-zinc-950/95 backdrop-blur-md md:hidden"
           >
-            <div className="page-container flex flex-col gap-1 pb-4 pt-1">
+            <div className="page-container flex flex-col gap-1 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-1">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
@@ -110,7 +110,7 @@ export default function Navbar() {
                     setOpen(false)
                     scrollToId(link.id)
                   }}
-                  className="rounded-xl px-3 py-3 text-left text-sm text-zinc-300 hover:bg-zinc-800/80"
+                  className="min-h-11 rounded-xl px-3 py-3 text-left text-base text-zinc-300 hover:bg-zinc-800/80 sm:min-h-0 sm:text-sm"
                 >
                   {link.label}
                 </button>

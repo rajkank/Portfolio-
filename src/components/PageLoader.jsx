@@ -143,7 +143,7 @@ export default function PageLoader() {
             opacity: 0,
             transition: { duration: 0.5, ease },
           }}
-          className="fixed inset-0 z-[2147483646] flex flex-col items-center justify-center gap-8 bg-[#0a0a0a] px-6"
+          className="fixed inset-0 z-[2147483646] flex flex-col items-center justify-center gap-8 bg-[#0a0a0a] px-4 pb-[env(safe-area-inset-bottom,0px)] pt-[env(safe-area-inset-top,0px)] sm:px-6"
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.12]"

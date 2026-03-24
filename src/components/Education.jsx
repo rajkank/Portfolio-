@@ -29,7 +29,7 @@ export default function Education() {
     <section
       id="education"
       lang="en"
-      className="section-bg-teal scroll-mt-24 flex min-h-[min(88svh,960px)] w-full flex-col justify-start pt-16 pb-24 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-32"
+      className="section-bg-teal flex min-h-0 w-full flex-col justify-start py-16 pb-20 sm:min-h-[min(88svh,960px)] sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-32"
     >
       <div className="page-container w-full">
         <SectionHeading

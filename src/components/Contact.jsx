@@ -55,7 +55,7 @@ export default function Contact() {
   const linkHover = reduce ? undefined : { scale: 1.02, transition: spring }
 
   return (
-    <section id="contact" className="scroll-mt-24 w-full pb-24 pt-12 sm:pt-16">
+    <section id="contact" className="w-full pb-[max(6rem,env(safe-area-inset-bottom,0px))] pt-12 sm:pb-24 sm:pt-16">
       <div className="page-container">
         <SectionHeading
           eyebrow="Contact"
@@ -82,18 +82,18 @@ export default function Contact() {
                 <motion.a
                   href={`mailto:${site.email}`}
                   whileHover={linkHover}
-                  className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 px-4 py-3.5 text-sm text-white transition-colors hover:border-emerald-500/40"
+                  className="flex min-w-0 items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 px-4 py-3.5 text-sm text-white transition-colors hover:border-emerald-500/40"
                 >
                   <Mail className="h-4 w-4 shrink-0 text-emerald-400" />
-                  {site.email}
+                  <span className="min-w-0 break-words">{site.email}</span>
                 </motion.a>
                 <motion.a
                   href={`tel:${site.phone.replace(/\s/g, '')}`}
                   whileHover={linkHover}
-                  className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 px-4 py-3.5 text-sm text-zinc-200 transition-colors hover:border-emerald-500/40"
+                  className="flex min-w-0 items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 px-4 py-3.5 text-sm text-zinc-200 transition-colors hover:border-emerald-500/40"
                 >
                   <Phone className="h-4 w-4 shrink-0 text-emerald-400" />
-                  {site.phone}
+                  <span className="min-w-0 break-words">{site.phone}</span>
                 </motion.a>
               </div>
             </div>
@@ -115,7 +115,7 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     whileHover={linkHover}
                     whileTap={reduce ? undefined : { scale: 0.98 }}
-                    className={`group inline-flex min-w-[160px] flex-1 items-center justify-center gap-2.5 rounded-2xl border border-zinc-700/80 bg-zinc-900/60 px-5 py-3.5 text-sm font-medium text-zinc-100 shadow-sm transition-colors sm:min-w-[140px] ${s.accent}`}
+                    className={`group inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center gap-2.5 rounded-2xl border border-zinc-700/80 bg-zinc-900/60 px-4 py-3 sm:min-w-[140px] sm:px-5 sm:py-3.5 ${s.accent} text-sm font-medium text-zinc-100 shadow-sm transition-colors`}
                   >
                     {s.id === 'kaggle' ? (
                       <KaggleMark className="h-7 w-7 shrink-0" />

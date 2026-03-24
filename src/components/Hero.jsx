@@ -8,6 +8,7 @@ import {
 } from 'framer-motion'
 import { ArrowUpRight, AtSign, Mail } from 'lucide-react'
 import { site } from '../data/site.js'
+import { useFinePointer } from '../hooks/useFinePointer.js'
 import Sparkles from './Sparkles.jsx'
 import ResumeHeroButton from './resume/ResumeHeroButton.jsx'
 
@@ -77,6 +78,11 @@ function scrollToId(id) {
 
 export default function Hero() {
   const reduce = useReducedMotion()
+  const finePointer = useFinePointer()
+  /** 3D tilt + pointer tracking — only for mouse/trackpad (saves GPU/CPU on phones). */
+  const tiltEnabled = finePointer && !reduce
+  /** Rotating rim, shimmer, pulse rings — skip on touch / reduced motion. */
+  const showHeavyDecor = finePointer && !reduce
   const [heroLineVisible, setHeroLineVisible] = useState(true)
   const portraitRef = useRef(null)
 
@@ -99,7 +105,7 @@ export default function Hero() {
   const tiltRotateX = useTransform(springY, [0, 1], [4.5, -4.5])
 
   const onPortraitPointerMove = (e) => {
-    if (reduce || !portraitRef.current) return
+    if (!tiltEnabled || !portraitRef.current) return
     const r = portraitRef.current.getBoundingClientRect()
     pointerX.set(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)))
     pointerY.set(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)))
@@ -146,18 +152,19 @@ export default function Hero() {
         transition: { type: 'spring', stiffness: 280, damping: 32, mass: 0.9 },
       }
 
-  const imageHover = reduce
-    ? undefined
-    : {
-        y: -5,
-        scale: 1.012,
-        transition: { type: 'spring', stiffness: 220, damping: 36, mass: 0.85 },
-      }
+  const imageHover =
+    reduce || !finePointer
+      ? undefined
+      : {
+          y: -5,
+          scale: 1.012,
+          transition: { type: 'spring', stiffness: 220, damping: 36, mass: 0.85 },
+        }
 
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100svh-3px)] w-full flex-col justify-center overflow-x-hidden pb-16 pt-24 sm:pb-20"
+      className="relative flex min-h-[100svh] min-h-[100dvh] w-full flex-col justify-center overflow-x-hidden pb-12 pt-[calc(5.75rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-28"
     >
       <Sparkles />
 
@@ -173,7 +180,7 @@ export default function Hero() {
             variants={wordHeadline}
             initial={textState}
             animate="visible"
-            className="font-serif text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.12] tracking-tight text-white transition-[text-shadow] duration-300 group-hover:text-emerald-50 group-hover:[text-shadow:0_0_32px_rgba(16,185,129,0.15)]"
+            className="font-serif text-[clamp(1.875rem,4.5vw+0.25rem,3.75rem)] leading-[1.12] tracking-tight text-white transition-[text-shadow] duration-300 group-hover:text-emerald-50 group-hover:[text-shadow:0_0_32px_rgba(16,185,129,0.15)]"
           >
             <span className="sr-only">{HEADLINE}</span>
             <span
@@ -199,12 +206,12 @@ export default function Hero() {
 
           <motion.div
             variants={fadeUp}
-            className="mt-8 flex flex-wrap items-center gap-3"
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
           >
             <button
               type="button"
               onClick={() => scrollToId('contact')}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-lg shadow-emerald-500/10 transition hover:bg-zinc-100"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-zinc-950 shadow-lg shadow-emerald-500/10 transition hover:bg-zinc-100 sm:w-auto sm:py-3"
             >
               <Mail className="h-4 w-4" />
               Let&apos;s talk
@@ -212,7 +219,7 @@ export default function Hero() {
             <button
               type="button"
               onClick={() => scrollToId('projects')}
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-600 bg-zinc-900/40 px-6 py-3 text-sm font-medium text-white transition hover:border-emerald-500/40 hover:bg-zinc-800/60"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-zinc-600 bg-zinc-900/40 px-6 py-3.5 text-sm font-medium text-white transition hover:border-emerald-500/40 hover:bg-zinc-800/60 sm:w-auto sm:py-3"
             >
               View projects
               <ArrowUpRight className="h-4 w-4" />
@@ -220,7 +227,7 @@ export default function Hero() {
             <ResumeHeroButton />
             <a
               href={`mailto:${site.email}`}
-              className="inline-flex items-center gap-2 rounded-full border border-transparent px-2 py-2 text-sm text-zinc-500 transition hover:text-emerald-400"
+              className="inline-flex min-w-0 max-w-full items-center gap-2 break-all rounded-full border border-transparent px-2 py-2 text-sm text-zinc-500 transition hover:text-emerald-400 sm:break-normal"
             >
               <AtSign className="h-4 w-4 opacity-70" />
               {site.email}
@@ -233,7 +240,7 @@ export default function Hero() {
           initial={imageState}
           animate="visible"
           whileHover={imageHover}
-          className="group relative mx-auto w-full max-w-[300px] sm:max-w-[340px] lg:mx-0 lg:ml-auto lg:max-w-[360px] xl:max-w-[380px] lg:justify-self-end"
+          className="group relative mx-auto w-full max-w-[min(100%,300px)] sm:max-w-[340px] lg:mx-0 lg:ml-auto lg:max-w-[360px] xl:max-w-[380px] lg:justify-self-end"
         >
           {/* Ambient glow */}
           <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[radial-gradient(ellipse_at_50%_40%,rgba(16,185,129,0.22),transparent_65%)] blur-2xl transition-opacity duration-500 group-hover:opacity-100 sm:-inset-10" />
@@ -243,17 +250,17 @@ export default function Hero() {
           <motion.div
             className="relative"
             animate={
-              reduce
+              reduce || !finePointer
                 ? undefined
                 : {
-                    y: [0, -5],
+                    y: [0, -4],
                   }
             }
             transition={
-              reduce
+              reduce || !finePointer
                 ? undefined
                 : {
-                    duration: 6.5,
+                    duration: 7,
                     repeat: Infinity,
                     repeatType: 'mirror',
                     ease: [0.45, 0, 0.55, 1],
@@ -261,7 +268,7 @@ export default function Hero() {
             }
           >
             {/* Breathing accent rings */}
-            {!reduce && (
+            {showHeavyDecor && (
               <>
                 <motion.span
                   className="pointer-events-none absolute -inset-3 rounded-[2.75rem] border border-emerald-400/25 sm:-inset-4"
@@ -291,21 +298,30 @@ export default function Hero() {
 
             <motion.div
               className="relative origin-center will-change-transform [transform-style:preserve-3d]"
-              style={{
-                rotateX: reduce ? 0 : tiltRotateX,
-                rotateY: reduce ? 0 : tiltRotateY,
-                rotateZ: reduce ? 0 : -1.5,
-                transformPerspective: 960,
-              }}
+              style={
+                tiltEnabled
+                  ? {
+                      rotateX: tiltRotateX,
+                      rotateY: tiltRotateY,
+                      rotateZ: -1.5,
+                      transformPerspective: 960,
+                    }
+                  : {
+                      rotateX: 0,
+                      rotateY: 0,
+                      rotateZ: -1.5,
+                      transformPerspective: 960,
+                    }
+              }
             >
               <div
                 ref={portraitRef}
                 className="relative z-[1] cursor-default"
-                onPointerMove={onPortraitPointerMove}
-                onPointerLeave={onPortraitPointerLeave}
+                onPointerMove={tiltEnabled ? onPortraitPointerMove : undefined}
+                onPointerLeave={tiltEnabled ? onPortraitPointerLeave : undefined}
               >
                 {/* Slow rotating rim light (subtle) */}
-                {!reduce && (
+                {showHeavyDecor && (
                   <motion.div
                     className="pointer-events-none absolute -inset-[35%] z-0 rounded-full opacity-40 blur-3xl"
                     style={{
@@ -324,7 +340,7 @@ export default function Hero() {
                     {/* Soft inner vignette */}
                     <div className="pointer-events-none absolute inset-0 z-[1] rounded-[inherit] shadow-[inset_0_0_60px_rgba(0,0,0,0.35)]" aria-hidden />
                     {/* Shimmer sweep */}
-                    {!reduce && (
+                    {showHeavyDecor && (
                       <motion.div
                         className="pointer-events-none absolute inset-0 z-[2] overflow-hidden rounded-[inherit]"
                         aria-hidden
@@ -350,6 +366,7 @@ export default function Hero() {
                       height={534}
                       loading="eager"
                       decoding="async"
+                      fetchPriority="high"
                     />
                   </div>
                 </div>

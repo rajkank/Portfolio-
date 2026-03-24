@@ -13,7 +13,7 @@ export default function Experience() {
     : { y: -8, scale: 1.008, transition: cardSpring }
 
   return (
-    <section id="experience" className="scroll-mt-24 w-full py-20">
+    <section id="experience" className="w-full py-16 sm:py-20">
       <div className="page-container">
         <SectionHeading
           eyebrow="Experience"
@@ -77,9 +77,11 @@ export default function Experience() {
                                   {String(index + 1).padStart(2, '0')}
                                 </span>
                               </div>
-                              <h3 className="mt-1 font-serif text-xl font-semibold leading-snug tracking-tight text-white sm:text-2xl">
-                                {job.role}
-                                <span className="font-sans font-normal text-zinc-500"> — </span>
+                              <h3 className="mt-1 flex flex-col gap-1 font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-0 sm:text-xl md:text-2xl">
+                                <span>{job.role}</span>
+                                <span className="hidden font-sans font-normal text-zinc-500 sm:inline sm:px-1">
+                                  —
+                                </span>
                                 <span className="text-emerald-400/95">{job.company}</span>
                               </h3>
                             </div>

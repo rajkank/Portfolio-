@@ -12,11 +12,11 @@ import BackgroundGlow from './components/BackgroundGlow.jsx'
 
 export default function App() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#0a0a0a] text-zinc-100">
+    <div className="relative min-h-screen min-h-dvh min-w-0 overflow-x-hidden bg-[#0a0a0a] text-zinc-100">
       <PageLoader />
       <BackgroundGlow />
       <Navbar />
-      <main>
+      <main className="relative min-w-0 isolate">
         <Hero />
         <About />
         <Experience />

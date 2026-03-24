@@ -11,7 +11,7 @@ export default function Projects() {
   const cardHover = reduce ? undefined : { y: -6, transition: spring }
 
   return (
-    <section id="projects" lang="en" className="section-bg-teal scroll-mt-24 w-full py-20">
+    <section id="projects" lang="en" className="section-bg-teal w-full py-16 sm:py-20">
       <div className="page-container">
         <SectionHeading
           variant="gradient"
@@ -54,7 +54,7 @@ export default function Projects() {
                             <Layers className="h-4 w-4" aria-hidden />
                           </span>
                           <div className="min-w-0">
-                            <h3 className="font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:text-xl lg:text-[1.35rem] lg:leading-tight">
+                            <h3 className="break-words font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:text-xl lg:text-[1.35rem] lg:leading-tight">
                               {p.title}
                             </h3>
                             <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500 sm:text-xs">

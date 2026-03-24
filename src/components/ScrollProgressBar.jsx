@@ -38,7 +38,7 @@ export default function ScrollProgressBar() {
 
   return (
     <div
-      className="relative h-[3px] w-full shrink-0 overflow-hidden bg-zinc-900/90"
+      className="relative h-1 w-full shrink-0 overflow-hidden bg-zinc-900/90"
       role="presentation"
       aria-hidden
     >

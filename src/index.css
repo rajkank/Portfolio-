@@ -18,7 +18,11 @@
   html {
     /* `smooth` here fights scroll-linked JS and fixed UI; nav still uses scrollIntoView({ behavior: 'smooth' }). */
     scroll-behavior: auto;
+    /* Matches section scroll-margin so native :target / hash jumps clear the fixed header */
+    scroll-padding-top: calc(5.25rem + env(safe-area-inset-top, 0px));
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     scrollbar-width: none !important;
     scrollbar-color: transparent transparent;
     -ms-overflow-style: none !important;
@@ -27,7 +31,9 @@
   body {
     margin: 0;
     min-height: 100vh;
+    min-height: 100dvh;
     overflow-x: hidden;
+    overscroll-behavior-x: none;
     background-color: var(--color-bg);
     color: #fafafa;
     font-family: var(--font-sans);
@@ -39,6 +45,7 @@
 
   #root {
     min-height: 100%;
+    min-width: 0;
     overflow-x: hidden;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
@@ -59,6 +66,24 @@
   *::-webkit-scrollbar-thumb {
     background: transparent !important;
   }
+
+  /** Anchor targets clear fixed header + progress + notch / Dynamic Island */
+  section[id] {
+    scroll-margin-top: calc(5.25rem + env(safe-area-inset-top, 0px));
+  }
+
+  /** Faster, more predictable taps on touch devices (no double-tap zoom wait on legacy engines) */
+  button,
+  [role='button'],
+  a[href] {
+    touch-action: manipulation;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
 
 ::selection {
@@ -68,7 +93,7 @@
 
 @layer components {
   .page-container {
-    @apply mx-auto w-full max-w-none px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20;
+    @apply mx-auto w-full min-w-0 max-w-none px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20;
   }
 
   /** Same teal gradient as About / Projects sections */
