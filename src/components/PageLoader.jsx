@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useLoaderGate } from '../context/LoaderGate.jsx'
 import { site } from '../data/site.js'
 
 /** Minimum time the loader stays visible after assets are ready (avoids a flash). */
@@ -29,7 +30,13 @@ function getFontsReadyPromise() {
 
 export default function PageLoader() {
   const [visible, setVisible] = useState(() => !loaderDismissedGlobal)
-  const [progress, setProgress] = useState(0)
+  const { setHeroAnimationReady } = useLoaderGate()
+  /** First paint only — if the overlay is skipped, hero animations must still run. */
+  const initialLoaderVisibleRef = useRef(visible)
+  /** Progress is driven via refs + DOM updates — never `setState` inside the rAF loop (that was ~60 React commits/sec). */
+  const progressFillRef = useRef(null)
+  const progressPctRef = useRef(null)
+  const statusRef = useRef(null)
   const finishedRef = useRef(false)
   const hideTimerRef = useRef(null)
   const rafRef = useRef(null)
@@ -40,6 +47,12 @@ export default function PageLoader() {
   useLayoutEffect(() => {
     document.getElementById('initial-site-loader')?.remove()
   }, [])
+
+  useLayoutEffect(() => {
+    if (!initialLoaderVisibleRef.current) {
+      setHeroAnimationReady(true)
+    }
+  }, [setHeroAnimationReady])
 
   useEffect(() => {
     if (loaderDismissedGlobal) return
@@ -58,17 +71,28 @@ export default function PageLoader() {
      * Percent tracks real time: before assets are ready it creeps toward ~90% using MIN_DISPLAY_MS
      * as a guide; after we know the end time, it runs 0→100% across the full wait (including delay).
      */
+    const applyProgress = (pct) => {
+      const n = Math.round(pct)
+      const fill = progressFillRef.current
+      const label = progressPctRef.current
+      const status = statusRef.current
+      if (fill) fill.style.width = `${pct}%`
+      if (label) label.textContent = `${n}%`
+      if (status) status.setAttribute('aria-valuenow', String(n))
+    }
+
     const tick = () => {
       const elapsed = performance.now() - start
       const total = totalMsRef.current
-      if (total == null) {
-        setProgress(Math.min(90, (elapsed / MIN_DISPLAY_MS) * 90))
-      } else {
-        setProgress(Math.min(100, (elapsed / total) * 100))
-      }
+      const pct =
+        total == null
+          ? Math.min(90, (elapsed / MIN_DISPLAY_MS) * 90)
+          : Math.min(100, (elapsed / total) * 100)
+      applyProgress(pct)
       rafRef.current = requestAnimationFrame(tick)
     }
     rafRef.current = requestAnimationFrame(tick)
+    applyProgress(0)
 
     const finish = () => {
       if (finishedRef.current || loaderDismissedGlobal) return
@@ -126,10 +150,12 @@ export default function PageLoader() {
     <AnimatePresence
       onExitComplete={() => {
         document.body.style.overflow = ''
+        setHeroAnimationReady(true)
       }}
     >
       {visible && (
         <motion.div
+          ref={statusRef}
           key="page-loader"
           role="status"
           aria-live="polite"
@@ -137,7 +163,7 @@ export default function PageLoader() {
           aria-label="Loading portfolio"
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={Math.round(progress)}
+          aria-valuenow={0}
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
@@ -194,14 +220,16 @@ export default function PageLoader() {
 
             <div className="w-full" aria-hidden>
               <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-800/80">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-emerald-600 via-teal-400 to-cyan-500"
-                  style={{ width: `${progress}%` }}
-                  transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+                <div
+                  ref={progressFillRef}
+                  className="h-full w-0 rounded-full bg-gradient-to-r from-emerald-600 via-teal-400 to-cyan-500 will-change-[width]"
                 />
               </div>
-              <p className="mt-2 text-center text-xs font-medium tabular-nums text-zinc-400">
-                {Math.round(progress)}%
+              <p
+                ref={progressPctRef}
+                className="mt-2 text-center text-xs font-medium tabular-nums text-zinc-400"
+              >
+                0%
               </p>
             </div>
           </div>

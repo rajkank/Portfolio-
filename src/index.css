@@ -92,8 +92,9 @@
 }
 
 @layer components {
+  /** Centered column: readable on laptops / ultrawide; still full-width on phones */
   .page-container {
-    @apply mx-auto w-full min-w-0 max-w-none px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20;
+    @apply mx-auto w-full min-w-0 max-w-[min(100%,90rem)] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20;
   }
 
   /** Same teal gradient as About / Projects sections */

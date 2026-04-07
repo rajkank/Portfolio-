@@ -13,6 +13,12 @@ export const site = {
   resume: {
     pdfPath: '/RAJ SUDHIR KANK.pdf',
     downloadFileName: 'Raj-Sudhir-Kank-Resume.pdf',
+    /** Shown on the Download option before the user taps */
+    downloadDescription:
+      'Download a PDF copy for applications, recruiters, or your records.',
+    /** Shown right after Download is triggered (browsers handle saving differently) */
+    downloadAfterMessage:
+      'Your download should begin in a moment. If nothing happens, check that downloads are allowed for this site, then look in your Downloads folder — the file is saved as',
   },
   social: {
     /** Order: LinkedIn → GitHub → Kaggle */

@@ -5,13 +5,13 @@ export default function MotionReveal({ children, className = '', delay = 0 }) {
 
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y: 16 }}
+      initial={reduce ? false : { opacity: 0, y: 14 }}
       whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-32px 0px -16px 0px', amount: 0.12 }}
+      viewport={{ once: true, margin: '-12% 0px -8% 0px', amount: 0.15 }}
       transition={{
-        duration: 0.42,
+        duration: 0.48,
         delay,
-        ease: [0.33, 0, 0.2, 1],
+        ease: [0.25, 0.1, 0.25, 1],
       }}
       className={className}
     >

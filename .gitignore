@@ -6,4 +6,4 @@ dist
 .env.*
 
 # Resume PDF (served from public/; not tracked)
-public/RAJ SUDHIR KANK.pdf
+#public/RAJ SUDHIR KANK.pdf

@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { LoaderGateProvider } from './context/LoaderGate.jsx'
 import PageLoader from './components/PageLoader.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
@@ -9,10 +11,35 @@ import Education from './components/Education.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import BackgroundGlow from './components/BackgroundGlow.jsx'
+import { scrollToSection } from './utils/scrollToSection.js'
+import { useLoaderGate } from './context/LoaderGate.jsx'
+
+/** If the site opens as `.../#contact` (bookmark / share), jump after the loader unlocks scroll/layout. */
+function ScrollToHashOnLoad() {
+  const { heroAnimationReady } = useLoaderGate()
+  useEffect(() => {
+    if (!heroAnimationReady) return
+    const raw = window.location.hash
+    if (!raw || raw.length <= 1) return
+    let id
+    try {
+      id = decodeURIComponent(raw.slice(1))
+    } catch {
+      return
+    }
+    if (!id || !document.getElementById(id)) return
+
+    const t = window.setTimeout(() => scrollToSection(id), 80)
+    return () => window.clearTimeout(t)
+  }, [heroAnimationReady])
+  return null
+}
 
 export default function App() {
   return (
+    <LoaderGateProvider>
     <div className="relative min-h-screen min-h-dvh min-w-0 overflow-x-hidden bg-[#0a0a0a] text-zinc-100">
+      <ScrollToHashOnLoad />
       <PageLoader />
       <BackgroundGlow />
       <Navbar />
@@ -27,5 +54,6 @@ export default function App() {
       </main>
       <Footer />
     </div>
+    </LoaderGateProvider>
   )
 }
