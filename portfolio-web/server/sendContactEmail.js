@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { autoReplyHtml, ownerHtml } from './emailTemplates.js'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -7,14 +8,6 @@ export class ContactError extends Error {
     super(message)
     this.statusCode = statusCode
   }
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
 }
 
 function firstLine(value) {
@@ -55,31 +48,6 @@ export function parseContactPayload(body) {
     subject,
     message,
   }
-}
-
-function ownerHtml({ name, email, subject, message }) {
-  const topic = subject || 'Portfolio inquiry'
-  return `
-    <div style="font-family:Inter,Segoe UI,sans-serif;line-height:1.6;color:#18181b">
-      <p style="margin:0 0 16px">New message from your portfolio contact form.</p>
-      <p style="margin:0 0 8px"><strong>Name:</strong> ${escapeHtml(name)}</p>
-      <p style="margin:0 0 8px"><strong>Email:</strong> ${escapeHtml(email)}</p>
-      <p style="margin:0 0 8px"><strong>Subject:</strong> ${escapeHtml(topic)}</p>
-      <p style="margin:16px 0 8px"><strong>Message:</strong></p>
-      <pre style="white-space:pre-wrap;font-family:inherit;margin:0">${escapeHtml(message)}</pre>
-    </div>
-  `
-}
-
-function autoReplyHtml({ name }) {
-  return `
-    <div style="font-family:Inter,Segoe UI,sans-serif;line-height:1.7;color:#18181b">
-      <p>Hi ${escapeHtml(name)},</p>
-      <p>Thanks for getting in touch through my portfolio. I have received your message and will get back to you as soon as I can — usually within a day.</p>
-      <p>If your note is time-sensitive, you can also email me directly at kankraj24@gmail.com.</p>
-      <p style="margin-bottom:0">Best regards,<br/>Raj Sudhir Kank<br/>AI Engineer<br/>Mumbai, India</p>
-    </div>
-  `
 }
 
 /**
