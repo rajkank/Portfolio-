@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, AtSign, Mail } from 'lucide-react'
+import { ArrowUpRight, Mail } from 'lucide-react'
 import { useLoaderGate } from '../context/LoaderGate.jsx'
 import { site } from '../data/site.js'
 import { scrollToSection } from '../utils/scrollToSection.js'
@@ -115,7 +115,7 @@ export default function Hero() {
 
       <div className="page-container grid w-full gap-10 lg:grid-cols-[minmax(0,1.15fr)_auto] lg:items-center lg:gap-12 xl:gap-16">
         <motion.div
-          className="group min-w-0 rounded-2xl border border-transparent p-5 -m-5 transition-colors duration-300 hover:border-emerald-500/15 hover:bg-zinc-900/25 hover:shadow-[0_0_48px_-16px_rgba(16,185,129,0.12)] sm:p-6 sm:-m-6"
+          className="group min-w-0 rounded-none border border-transparent p-5 -m-5 transition-colors duration-300 hover:border-emerald-500/15 hover:bg-zinc-900/25 hover:shadow-[0_0_48px_-16px_rgba(16,185,129,0.12)] sm:p-6 sm:-m-6"
           variants={textStagger}
           initial={textState}
           animate={animateState}
@@ -180,13 +180,6 @@ export default function Hero() {
               <ArrowUpRight className="h-4 w-4" />
             </button>
             <ResumeHeroButton />
-            <a
-              href={`mailto:${site.email}`}
-              className="inline-flex min-w-0 max-w-full items-center gap-2 break-all rounded-full border border-transparent px-2 py-2 text-sm text-zinc-500 transition hover:text-emerald-400 sm:break-normal"
-            >
-              <AtSign className="h-4 w-4 opacity-70" />
-              {site.email}
-            </a>
           </motion.div>
         </motion.div>
 
@@ -196,11 +189,11 @@ export default function Hero() {
           animate={animateState}
           className="group relative mx-auto w-full max-w-[min(100%,340px)] lg:mx-0 lg:ml-auto lg:max-w-md lg:justify-self-end"
         >
-          <div className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[radial-gradient(ellipse_at_50%_40%,rgba(16,185,129,0.22),transparent_65%)] blur-2xl transition-opacity duration-500 group-hover:opacity-100 sm:-inset-10" />
-          <div className="pointer-events-none absolute -inset-4 rounded-[2.75rem] bg-gradient-to-br from-emerald-500/18 via-transparent to-teal-700/12 blur-xl transition-all duration-500 group-hover:from-emerald-400/28 group-hover:to-teal-600/20" />
+          <div className="pointer-events-none absolute -inset-8 rounded-none bg-[radial-gradient(ellipse_at_50%_40%,rgba(16,185,129,0.22),transparent_65%)] blur-2xl transition-opacity duration-500 group-hover:opacity-100 sm:-inset-10" />
+          <div className="pointer-events-none absolute -inset-4 rounded-none bg-gradient-to-br from-emerald-500/18 via-transparent to-teal-700/12 blur-xl transition-all duration-500 group-hover:from-emerald-400/28 group-hover:to-teal-600/20" />
 
-          <div className="relative rounded-[2.5rem] bg-gradient-to-br from-emerald-300/45 via-teal-500/30 to-zinc-900/90 p-[3px] shadow-[0_32px_64px_-28px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.08)] transition-[box-shadow] duration-500 group-hover:shadow-[0_40px_80px_-28px_rgba(16,185,129,0.22),0_0_0_1px_rgba(16,185,129,0.2)]">
-            <div className="rounded-[calc(2.5rem-3px)] bg-zinc-950/90 px-8 py-9 ring-1 ring-zinc-800/70 backdrop-blur-sm sm:px-10 sm:py-11">
+          <div className="relative rounded-none bg-gradient-to-br from-emerald-300/45 via-teal-500/30 to-zinc-900/90 p-[3px] shadow-[0_32px_64px_-28px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.08)] transition-[box-shadow] duration-500 group-hover:shadow-[0_40px_80px_-28px_rgba(16,185,129,0.22),0_0_0_1px_rgba(16,185,129,0.2)]">
+            <div className="rounded-none bg-zinc-950/90 px-8 py-9 ring-1 ring-zinc-800/70 backdrop-blur-sm sm:px-10 sm:py-11">
               <p className="font-serif text-[clamp(1.75rem,3.2vw+0.35rem,2.85rem)] leading-[1.15] tracking-tight text-white">
                 {site.name}
               </p>

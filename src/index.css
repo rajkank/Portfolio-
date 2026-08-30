@@ -91,6 +91,109 @@
   color: #fff;
 }
 
+@media (pointer: fine) {
+  html.cursor-ai,
+  html.cursor-ai * {
+    cursor: none !important;
+  }
+
+  html.cursor-ai input,
+  html.cursor-ai textarea,
+  html.cursor-ai select,
+  html.cursor-ai [contenteditable='true'] {
+    cursor: text !important;
+  }
+}
+
+.ai-cursor-core,
+.ai-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.ai-cursor-core {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 9999px;
+  background: #ecfdf5;
+  box-shadow:
+    0 0 0 1px rgba(16, 185, 129, 0.9),
+    0 0 16px 2px rgba(16, 185, 129, 0.55);
+  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease, margin 0.2s ease,
+    background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-cursor-ring {
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 9999px;
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  box-shadow: 0 0 24px -6px rgba(16, 185, 129, 0.35);
+  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease, border-color 0.22s ease,
+    opacity 0.2s ease, background-color 0.22s ease;
+}
+
+.ai-cursor-tick {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-color: #34d399;
+  border-style: solid;
+}
+
+.ai-cursor-tick-tl {
+  top: 4px;
+  left: 4px;
+  border-width: 1.5px 0 0 1.5px;
+}
+
+.ai-cursor-tick-tr {
+  top: 4px;
+  right: 4px;
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.ai-cursor-tick-bl {
+  bottom: 4px;
+  left: 4px;
+  border-width: 0 0 1.5px 1.5px;
+}
+
+.ai-cursor-tick-br {
+  bottom: 4px;
+  right: 4px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+.ai-cursor[data-hover='true'] .ai-cursor-ring {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-color: rgba(52, 211, 153, 0.85);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.ai-cursor[data-hover='true'] .ai-cursor-core {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #6ee7b7;
+}
+
+.ai-cursor[data-down='true'] .ai-cursor-ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+}
+
+.ai-cursor[data-text='true'] {
+  opacity: 0;
+}
+
 @layer components {
   /** Centered column: readable on laptops / ultrawide; still full-width on phones */
   .page-container {

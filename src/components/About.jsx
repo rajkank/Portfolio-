@@ -25,7 +25,7 @@ export default function About() {
         <MotionReveal>
           <motion.div
             whileHover={hover}
-            className="group h-full rounded-2xl border border-transparent p-1 transition-colors duration-300 hover:border-emerald-500/10"
+            className="group h-full rounded-none border border-transparent p-1 transition-colors duration-300 hover:border-emerald-500/10"
           >
             <GlassCard className="relative overflow-hidden p-6 transition-shadow duration-300 group-hover:shadow-[0_0_48px_-16px_rgba(16,185,129,0.12)] sm:p-8 lg:p-10">
               <div

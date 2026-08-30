@@ -76,7 +76,7 @@ export function ResumeModal({ open, onClose }) {
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className="relative z-10 flex max-h-[min(92vh,880px)] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-emerald-500/20 bg-gradient-to-b from-zinc-900/98 to-zinc-950 shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_32px_64px_-20px_rgba(0,0,0,0.85)]"
+            className="relative z-10 flex max-h-[min(92vh,880px)] w-full max-w-3xl flex-col overflow-hidden rounded-none border border-emerald-500/20 bg-gradient-to-b from-zinc-900/98 to-zinc-950 shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_32px_64px_-20px_rgba(0,0,0,0.85)]"
             initial={{ opacity: 0, scale: 0.94, y: 18 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -144,7 +144,7 @@ export function ResumeModal({ open, onClose }) {
                 <button
                   type="button"
                   onClick={() => setStep('preview')}
-                  className="group flex flex-col items-start gap-3 rounded-2xl border border-zinc-700/80 bg-zinc-900/50 p-5 text-left transition hover:border-emerald-500/45 hover:bg-zinc-800/60 hover:shadow-[0_0_40px_-12px_rgba(16,185,129,0.35)]"
+                  className="group flex flex-col items-start gap-3 rounded-none border border-zinc-700/80 bg-zinc-900/50 p-5 text-left transition hover:border-emerald-500/45 hover:bg-zinc-800/60 hover:shadow-[0_0_40px_-12px_rgba(16,185,129,0.35)]"
                 >
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/25 transition group-hover:bg-emerald-500/25">
                     <Eye className="h-5 w-5" />
@@ -160,7 +160,7 @@ export function ResumeModal({ open, onClose }) {
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="group flex flex-col items-start gap-3 rounded-2xl border border-zinc-700/80 bg-zinc-900/50 p-5 text-left transition hover:border-teal-500/45 hover:bg-zinc-800/60 hover:shadow-[0_0_40px_-12px_rgba(20,184,166,0.3)]"
+                  className="group flex flex-col items-start gap-3 rounded-none border border-zinc-700/80 bg-zinc-900/50 p-5 text-left transition hover:border-teal-500/45 hover:bg-zinc-800/60 hover:shadow-[0_0_40px_-12px_rgba(20,184,166,0.3)]"
                 >
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-500/15 text-teal-300 ring-1 ring-teal-500/25 transition group-hover:bg-teal-500/25">
                     <Download className="h-5 w-5" />
@@ -175,7 +175,7 @@ export function ResumeModal({ open, onClose }) {
               </div>
             ) : (
               <div className="relative flex min-h-0 flex-1 flex-col px-3 pb-4 pt-1 sm:px-5 sm:pb-5">
-                <div className="min-h-0 flex-1 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/80 ring-1 ring-white/5">
+                <div className="min-h-0 flex-1 overflow-hidden rounded-none border border-zinc-800 bg-zinc-950/80 ring-1 ring-white/5">
                   <iframe
                     title="Resume PDF"
                     src={`${pdfUrl}#view=FitH`}

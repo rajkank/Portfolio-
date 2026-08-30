@@ -1,7 +1,15 @@
-import { defineConfig } from 'vite'
+import { loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite'
+import { contactApiPlugin } from './server/contactApiPlugin.js'
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
+/** Loads RESEND_API_KEY / CONTACT_EMAIL for the /api/contact route (not exposed to the browser). */
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+
+  return {
+    plugins: [react(), tailwindcss(), contactApiPlugin(env)],
+  }
 })

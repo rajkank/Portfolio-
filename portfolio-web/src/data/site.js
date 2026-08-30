@@ -4,7 +4,7 @@ export const site = {
   nameDisplay: 'RAJ SUDHIR KANK',
   location: 'Mumbai, India',
   title: 'AI Engineer',
-  focus: 'Agentic AI, Generative AI, Machine Learning',
+  focus: 'Generative AI, LLMs, Machine Learning',
   email: 'kankraj24@gmail.com',
   phone: '+91 8446730959',
   /** Profile image in /public */
@@ -27,10 +27,10 @@ export const site = {
     kaggle: 'https://www.kaggle.com/rajkank',
   },
   tagline:
-    'Autonomous, decision-driven AI systems that turn complex business needs into scalable products.',
+    'Production-ready RAG pipelines, semantic search, and LLM-powered systems that improve how businesses operate.',
   /** About section — full bio only */
   aboutBio:
-    'AI Engineer specializing in Agentic AI, Generative AI, and Machine Learning, with 10 months of hands-on experience, focused on building autonomous, decision-driven systems that solve real-world problems. Experienced in designing end-to-end AI solutions across HRTech, FinTech, and AgriTech, including AI-powered HRMS, intelligent document verification, startup–investor matchmaking platforms, and resume analysis systems. Strong expertise in Python, LLMs, NLP, Computer Vision, and intelligent automation, with a proven ability to translate complex business requirements into scalable AI products.',
+    'AI Engineer specializing in Generative AI and LLM-powered systems, with hands-on experience building production-ready RAG pipelines, semantic search, and enterprise chatbots. Proficient in LangChain, prompt engineering, and LLM integration (OpenAI, Claude, Gemini), backed by strong Machine Learning, NLP, and Computer Vision expertise for document intelligence and automation. Experienced in designing scalable AI architectures and REST APIs that improve business processes and operational efficiency.',
 }
 
 export const experience = [
@@ -39,14 +39,37 @@ export const experience = [
     role: 'AI Engineer',
     company: 'Rigved Technologies',
     period: 'Jun 2025 – Present',
-    highlights: [
-      'Designed and developed an AI-enabled HRMS covering Attendance, Leave Management, and Employee Onboarding workflows.',
-      'Automated document verification for Aadhaar, PAN, and certificates using OCR, NLP, and Computer Vision.',
-      'Implemented anomaly detection models to identify irregular attendance and policy violations.',
-      'Built a smart leave recommendation system using historical employee data and ML algorithms.',
-      'Enhanced system accuracy and operational efficiency through Python-based ML pipelines and OpenCV integration.',
-      'Built a RAG-based enterprise chatbot integrated with internal databases for automated query resolution.',
-      'Developed embedding and semantic search pipeline to improve chatbot response accuracy.',
+    projects: [
+      {
+        id: 'hrms',
+        title: 'AI-Enabled HRMS',
+        highlights: [
+          'Developed an AI-powered HRMS for attendance, leave management, employee onboarding, and document verification.',
+          'Built OCR-based document processing for Aadhaar, PAN, and employee certificates using OpenCV and Python.',
+          'Implemented attendance anomaly detection and intelligent leave recommendation using machine learning.',
+          'Developed REST APIs to integrate AI modules into HR workflows.',
+        ],
+      },
+      {
+        id: 'time-flow',
+        title: 'Time Flow',
+        highlights: [
+          'Developed an enterprise time tracking system for attendance, work-hour monitoring, and workforce analytics.',
+          'Built automated attendance, overtime, and productivity reporting modules.',
+          'Developed analytics to identify attendance trends and irregular employee work patterns.',
+          'Optimized backend services and reporting APIs for HR operations.',
+        ],
+      },
+      {
+        id: 'enterprise-chatbot',
+        title: 'Enterprise AI Chatbot',
+        highlights: [
+          'Developed a RAG-based chatbot for HR policy and employee support using enterprise documents.',
+          'Built document indexing, embedding generation, and semantic search pipelines.',
+          'Integrated LLM APIs to deliver accurate, context-aware responses.',
+          'Improved chatbot performance through prompt engineering and retrieval optimization.',
+        ],
+      },
     ],
   },
   {
@@ -118,23 +141,28 @@ export const projects = [
 
 export const skillCategories = [
   {
-    id: 'prog',
-    title: 'Programming & Libraries',
-    items: ['Python', 'NumPy', 'Pandas', 'Matplotlib', 'Scikit-learn'],
-  },
-  {
-    id: 'dl',
-    title: 'Deep Learning Frameworks',
-    items: ['TensorFlow', 'PyTorch'],
-  },
-  {
     id: 'genai',
     title: 'Generative AI',
     items: [
       'LLM Integration (OpenAI, Claude, Gemini)',
       'LangChain',
-      'Custom GPTs',
       'RAG Pipelines',
+      'Prompt Engineering',
+      'Embeddings & Semantic Search',
+      'Vector Databases (FAISS / Pinecone / Chroma)',
+      'Custom GPTs',
+      'LLM-based Content Generation',
+    ],
+  },
+  {
+    id: 'ml',
+    title: 'Machine Learning',
+    items: [
+      'Scikit-learn',
+      'TensorFlow',
+      'PyTorch',
+      'Random Forest',
+      'Anomaly Detection',
     ],
   },
   {
@@ -143,6 +171,7 @@ export const skillCategories = [
     items: [
       'Document Parsing',
       'Text Extraction',
+      'Named Entity Recognition',
       'Skill & Resume Analysis',
       'OCR + NLP Pipelines',
       'Automated Document Verification',
@@ -155,23 +184,33 @@ export const skillCategories = [
       'OpenCV',
       'Image Processing',
       'OCR (Aadhaar, PAN, Certificates)',
-      'Computer Vision–based Document Validation',
+      'Document Validation Pipelines',
     ],
   },
   {
-    id: 'tools',
-    title: 'Tools & Platforms',
-    items: ['Git', 'GitHub', 'AWS', 'GCP', 'Docker', 'Kubernetes', 'CICD', 'Jupyter', 'VS Code'],
+    id: 'backend',
+    title: 'Backend & APIs',
+    items: ['Python', 'FastAPI', 'Flask', 'REST API Development', 'Microservices'],
+  },
+  {
+    id: 'prog',
+    title: 'Programming & Data Libraries',
+    items: ['Python', 'NumPy', 'Pandas', 'Matplotlib'],
+  },
+  {
+    id: 'db',
+    title: 'Databases',
+    items: ['PostgreSQL', 'SQLite', 'Vector Stores (FAISS / Chroma)'],
+  },
+  {
+    id: 'cloud',
+    title: 'Cloud & DevOps',
+    items: ['AWS', 'GCP', 'Docker', 'Kubernetes', 'CI/CD', 'Git', 'GitHub'],
   },
   {
     id: 'web',
     title: 'Web Technologies',
     items: ['JavaScript', 'HTML', 'CSS', 'ReactJS'],
-  },
-  {
-    id: 'db',
-    title: 'Databases',
-    items: ['Postgresql', 'SQLite'],
   },
 ]
 

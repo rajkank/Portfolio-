@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useLoaderGate } from '../context/LoaderGate.jsx'
-import { site } from '../data/site.js'
 
 /** Minimum time the loader stays visible after assets are ready (avoids a flash). */
 const MIN_DISPLAY_MS = 2400
@@ -34,7 +33,6 @@ export default function PageLoader() {
   /** First paint only — if the overlay is skipped, hero animations must still run. */
   const initialLoaderVisibleRef = useRef(visible)
   /** Progress is driven via refs + DOM updates — never `setState` inside the rAF loop (that was ~60 React commits/sec). */
-  const progressFillRef = useRef(null)
   const progressPctRef = useRef(null)
   const statusRef = useRef(null)
   const finishedRef = useRef(false)
@@ -73,10 +71,8 @@ export default function PageLoader() {
      */
     const applyProgress = (pct) => {
       const n = Math.round(pct)
-      const fill = progressFillRef.current
       const label = progressPctRef.current
       const status = statusRef.current
-      if (fill) fill.style.width = `${pct}%`
       if (label) label.textContent = `${n}%`
       if (status) status.setAttribute('aria-valuenow', String(n))
     }
@@ -169,7 +165,7 @@ export default function PageLoader() {
             opacity: 0,
             transition: { duration: 0.5, ease },
           }}
-          className="fixed inset-0 z-[2147483646] flex flex-col items-center justify-center gap-8 bg-[#0a0a0a] px-4 pb-[env(safe-area-inset-bottom,0px)] pt-[env(safe-area-inset-top,0px)] sm:px-6"
+          className="fixed inset-0 z-[2147483646] flex items-center justify-center bg-[#0a0a0a] px-4 pb-[env(safe-area-inset-bottom,0px)] pt-[env(safe-area-inset-top,0px)]"
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.12]"
@@ -180,58 +176,27 @@ export default function PageLoader() {
             aria-hidden
           />
 
-          <div className="relative flex w-full max-w-sm flex-col items-center gap-6">
-            <div className="relative h-16 w-16">
-              <motion.span
-                className="absolute inset-0 rounded-full border-2 border-zinc-800"
-                aria-hidden
-              />
-              <motion.span
-                className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400 border-r-emerald-500/40"
-                animate={{ rotate: 360 }}
-                transition={{
-                  duration: 0.9,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
-                aria-hidden
-              />
-            </div>
-
-            <div className="w-full text-center">
-              <p className="font-serif text-xl tracking-wide text-zinc-100 sm:text-2xl">
-                {site.name}
-              </p>
-              <p className="mt-2 text-sm font-medium tracking-[0.18em] text-zinc-500 uppercase">
-                Loading portfolio
-              </p>
-              <motion.p
-                className="mt-2 text-sm text-zinc-500"
-                animate={{ opacity: [0.55, 0.95, 0.55] }}
-                transition={{
-                  duration: 2.4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              >
-                Please wait while the site finishes loading
-              </motion.p>
-            </div>
-
-            <div className="w-full" aria-hidden>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-800/80">
-                <div
-                  ref={progressFillRef}
-                  className="h-full w-0 rounded-full bg-gradient-to-r from-emerald-600 via-teal-400 to-cyan-500 will-change-[width]"
-                />
-              </div>
-              <p
-                ref={progressPctRef}
-                className="mt-2 text-center text-xs font-medium tabular-nums text-zinc-400"
-              >
-                0%
-              </p>
-            </div>
+          <div className="relative h-28 w-28">
+            <motion.span
+              className="absolute inset-0 rounded-full border-2 border-zinc-800"
+              aria-hidden
+            />
+            <motion.span
+              className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400 border-r-emerald-500/40"
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 0.9,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+              aria-hidden
+            />
+            <p
+              ref={progressPctRef}
+              className="absolute inset-0 flex items-center justify-center text-sm font-medium tabular-nums text-zinc-200"
+            >
+              0%
+            </p>
           </div>
         </motion.div>
       )}

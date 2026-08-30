@@ -70,10 +70,10 @@ export default function Education() {
 
                 <motion.div className="group relative" whileHover={hoverCard}>
                   <div
-                    className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-white/12 via-transparent to-emerald-950/40 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                    className="pointer-events-none absolute -inset-px rounded-none bg-gradient-to-br from-white/12 via-transparent to-emerald-950/40 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
                     aria-hidden
                   />
-                  <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 p-6 shadow-xl shadow-black/30 backdrop-blur-md transition-[border-color,box-shadow] duration-300 group-hover:border-emerald-200/25 group-hover:shadow-[0_28px_60px_-28px_rgba(0,0,0,0.5)] sm:p-8">
+                  <div className="relative overflow-hidden rounded-none border border-white/10 bg-black/25 p-6 shadow-xl shadow-black/30 backdrop-blur-md transition-[border-color,box-shadow] duration-300 group-hover:border-emerald-200/25 group-hover:shadow-[0_28px_60px_-28px_rgba(0,0,0,0.5)] sm:p-8">
                     <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex min-w-0 gap-4">
                         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-emerald-100/95 shadow-inner transition-transform duration-300 group-hover:scale-105 group-hover:border-emerald-200/35">
@@ -93,7 +93,7 @@ export default function Education() {
                         </div>
                       </div>
 
-                      <div className="shrink-0 rounded-2xl border border-emerald-200/20 bg-emerald-950/30 px-5 py-4 text-center sm:min-w-[140px] sm:text-right">
+                      <div className="shrink-0 rounded-none border border-emerald-200/20 bg-emerald-950/30 px-5 py-4 text-center sm:min-w-[140px] sm:text-right">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-100/65">
                           Result
                         </p>

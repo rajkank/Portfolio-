@@ -11,6 +11,7 @@ import Education from './components/Education.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import BackgroundGlow from './components/BackgroundGlow.jsx'
+import AiCursor from './components/AiCursor.jsx'
 import { scrollToSection } from './utils/scrollToSection.js'
 import { useLoaderGate } from './context/LoaderGate.jsx'
 
@@ -41,6 +42,7 @@ export default function App() {
     <div className="relative min-h-screen min-h-dvh min-w-0 overflow-x-hidden bg-[#0a0a0a] text-zinc-100">
       <ScrollToHashOnLoad />
       <PageLoader />
+      <AiCursor />
       <BackgroundGlow />
       <Navbar />
       <main className="relative min-w-0 isolate">
