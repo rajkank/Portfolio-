@@ -11,7 +11,7 @@ export default function Projects() {
   const cardHover = reduce ? undefined : { y: -6, transition: spring }
 
   return (
-    <section id="projects" lang="en" className="section-bg-teal scroll-mt-24 w-full py-20">
+    <section id="projects" lang="en" className="section-bg-teal w-full py-16 sm:py-20">
       <div className="page-container">
         <SectionHeading
           variant="gradient"
@@ -26,8 +26,8 @@ export default function Projects() {
               key={p.id}
               initial={reduce ? false : { opacity: 0, y: 44 }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10% 0px' }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true, margin: '-8% 0px', amount: 0.15 }}
+              transition={{ duration: 0.52, delay: i * 0.06, ease: [0.25, 0.1, 0.25, 1] }}
               className="group relative"
             >
               <div
@@ -54,7 +54,7 @@ export default function Projects() {
                             <Layers className="h-4 w-4" aria-hidden />
                           </span>
                           <div className="min-w-0">
-                            <h3 className="font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:text-xl lg:text-[1.35rem] lg:leading-tight">
+                            <h3 className="break-words font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:text-xl lg:text-[1.35rem] lg:leading-tight">
                               {p.title}
                             </h3>
                             <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500 sm:text-xs">

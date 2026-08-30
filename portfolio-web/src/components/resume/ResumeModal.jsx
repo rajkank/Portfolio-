@@ -12,6 +12,7 @@ const ease = [0.22, 1, 0.36, 1]
  */
 export function ResumeModal({ open, onClose }) {
   const [step, setStep] = useState('pick')
+  const [downloadNotice, setDownloadNotice] = useState(false)
   const titleId = useId()
   const pdfUrl = encodeURI(site.resume.pdfPath)
 
@@ -25,7 +26,10 @@ export function ResumeModal({ open, onClose }) {
   }, [open])
 
   useEffect(() => {
-    if (!open) setStep('pick')
+    if (!open) {
+      setStep('pick')
+      setDownloadNotice(false)
+    }
   }, [open])
 
   useEffect(() => {
@@ -45,6 +49,7 @@ export function ResumeModal({ open, onClose }) {
     document.body.appendChild(a)
     a.click()
     a.remove()
+    setDownloadNotice(true)
   }
 
   if (typeof document === 'undefined') return null
@@ -54,7 +59,7 @@ export function ResumeModal({ open, onClose }) {
       {open ? (
         <motion.div
           key="resume-modal"
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] pt-[max(1rem,env(safe-area-inset-top,0px))] sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -117,6 +122,23 @@ export function ResumeModal({ open, onClose }) {
               </button>
             </header>
 
+            {downloadNotice ? (
+              <div
+                role="status"
+                aria-live="polite"
+                className="border-b border-emerald-500/25 bg-emerald-500/[0.12] px-4 py-3 sm:px-6"
+              >
+                <p className="text-sm font-medium text-emerald-100">Thanks — download requested</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-emerald-100/90">
+                  {site.resume.downloadAfterMessage}{' '}
+                  <span className="font-mono text-[0.92em] text-white/95">
+                    {site.resume.downloadFileName}
+                  </span>
+                  .
+                </p>
+              </div>
+            ) : null}
+
             {step === 'pick' ? (
               <div className="relative grid gap-3 p-4 sm:grid-cols-2 sm:gap-4 sm:p-6">
                 <button
@@ -146,7 +168,7 @@ export function ResumeModal({ open, onClose }) {
                   <span>
                     <span className="block font-semibold text-white">Download</span>
                     <span className="mt-1 block text-sm text-zinc-500">
-                      Save {site.resume.downloadFileName} to your device
+                      {site.resume.downloadDescription}
                     </span>
                   </span>
                 </button>

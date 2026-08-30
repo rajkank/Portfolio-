@@ -13,7 +13,7 @@ export default function Experience() {
     : { y: -8, scale: 1.008, transition: cardSpring }
 
   return (
-    <section id="experience" className="scroll-mt-24 w-full py-20">
+    <section id="experience" className="w-full py-16 sm:py-20">
       <div className="page-container">
         <SectionHeading
           eyebrow="Experience"
@@ -37,11 +37,11 @@ export default function Experience() {
                 className="relative pl-0 sm:pl-2 md:pl-0"
                 initial={reduce ? false : { opacity: 0, y: 48 }}
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-12% 0px -8% 0px' }}
+                viewport={{ once: true, margin: '-10% 0px -6% 0px', amount: 0.15 }}
                 transition={{
-                  duration: 0.65,
-                  delay: index * 0.1,
-                  ease: [0.22, 1, 0.36, 1],
+                  duration: 0.52,
+                  delay: index * 0.08,
+                  ease: [0.25, 0.1, 0.25, 1],
                 }}
               >
                 {/* Step node */}
@@ -77,9 +77,11 @@ export default function Experience() {
                                   {String(index + 1).padStart(2, '0')}
                                 </span>
                               </div>
-                              <h3 className="mt-1 font-serif text-xl font-semibold leading-snug tracking-tight text-white sm:text-2xl">
-                                {job.role}
-                                <span className="font-sans font-normal text-zinc-500"> — </span>
+                              <h3 className="mt-1 flex flex-col gap-1 font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-0 sm:text-xl md:text-2xl">
+                                <span>{job.role}</span>
+                                <span className="hidden font-sans font-normal text-zinc-500 sm:inline sm:px-1">
+                                  —
+                                </span>
                                 <span className="text-emerald-400/95">{job.company}</span>
                               </h3>
                             </div>

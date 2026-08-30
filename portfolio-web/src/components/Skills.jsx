@@ -46,7 +46,7 @@ export default function Skills() {
   const cardHover = reduce ? undefined : { y: -6, transition: spring }
 
   return (
-    <section id="skills" className="scroll-mt-24 w-full py-20">
+    <section id="skills" className="w-full py-16 sm:py-20">
       <div className="page-container">
         <SectionHeading
           eyebrow="Skills"
@@ -59,7 +59,7 @@ export default function Skills() {
           variants={container}
           initial={reduce ? 'visible' : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={{ once: true, margin: '-8% 0px', amount: 0.15 }}
         >
           {skillCategories.map((cat) => {
             const Icon = iconById[cat.id] ?? Code2

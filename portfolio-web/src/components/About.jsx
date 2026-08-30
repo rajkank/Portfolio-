@@ -14,7 +14,7 @@ export default function About() {
   const hover = reduce ? undefined : cardHover
 
   return (
-    <section id="about" lang="en" className="section-bg-teal scroll-mt-24 w-full py-20">
+    <section id="about" lang="en" className="section-bg-teal w-full py-16 sm:py-20">
       <div className="page-container">
         <SectionHeading
           variant="gradient"
@@ -34,7 +34,7 @@ export default function About() {
               />
               <div className="pl-4 sm:pl-5">
                 <h3 className="font-serif text-2xl text-white sm:text-3xl">Bio</h3>
-                <p className="mt-6 w-full text-justify text-[15px] leading-[1.85] text-zinc-400 [text-justify:inter-word] hyphens-auto sm:text-base sm:leading-[1.9]">
+                <p className="mt-6 w-full text-left text-[15px] leading-[1.85] text-zinc-400 hyphens-auto sm:text-justify sm:text-base sm:leading-[1.9] [text-justify:inter-word]">
                   {site.aboutBio}
                 </p>
               </div>
