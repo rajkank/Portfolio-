@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.local
+.env
+.env.*
+
+# Resume PDF (served from public/; not tracked)
+public/RAJ SUDHIR KANK.pdf
