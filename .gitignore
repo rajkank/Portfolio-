@@ -4,6 +4,7 @@ dist
 *.local
 .env
 .env.*
+!.env.example
 
 # Resume PDF (served from public/; not tracked)
 #public/RAJ SUDHIR KANK.pdf

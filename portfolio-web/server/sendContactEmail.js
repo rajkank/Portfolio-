@@ -15,7 +15,7 @@ function firstLine(value) {
 }
 
 export function parseContactPayload(body) {
-  if (!body || typeof body !== 'object') {
+  if (!body || typeof body !== 'object' || Array.isArray(body) || Buffer.isBuffer(body)) {
     throw new ContactError('Invalid request.')
   }
 
@@ -58,14 +58,24 @@ export async function sendContactEmails(body, env = process.env) {
   if (parsed.spam) return { ok: true }
 
   const apiKey = env.RESEND_API_KEY
-  const toOwner = env.CONTACT_EMAIL
-  if (!apiKey || !toOwner) {
+  const toOwner = env.CONTACT_EMAIL || 'kankraj24@gmail.com'
+  if (!apiKey) {
+    console.error('[contact] RESEND_API_KEY is not set')
     throw new ContactError('The contact form is not connected yet.', 503)
+  }
+  if (!env.CONTACT_EMAIL) {
+    console.warn('[contact] CONTACT_EMAIL is not set; using default recipient')
   }
 
   const from = env.RESEND_FROM_EMAIL || 'Raj Sudhir Kank <onboarding@resend.dev>'
   const topic = parsed.subject || 'Portfolio inquiry'
   const resend = new Resend(apiKey)
+
+  console.info('[contact] sending owner email', {
+    to: toOwner,
+    from,
+    replyTo: parsed.email,
+  })
 
   const ownerResult = await resend.emails.send({
     from,
@@ -83,6 +93,11 @@ export async function sendContactEmails(body, env = process.env) {
   })
 
   if (ownerResult.error) {
+    console.error('[contact] Resend owner email failed', {
+      name: ownerResult.error.name,
+      message: ownerResult.error.message,
+      statusCode: ownerResult.error.statusCode,
+    })
     throw new ContactError(
       ownerResult.error.message || 'Could not send your message. Please try again.',
       502,
@@ -109,7 +124,13 @@ export async function sendContactEmails(body, env = process.env) {
   })
 
   if (replyResult.error) {
-    console.warn('Contact auto-reply failed:', replyResult.error.message)
+    console.warn('[contact] auto-reply failed', {
+      name: replyResult.error.name,
+      message: replyResult.error.message,
+      statusCode: replyResult.error.statusCode,
+    })
+  } else {
+    console.info('[contact] emails sent')
   }
 
   return { ok: true }
