@@ -3,22 +3,27 @@
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'DM Serif Display', ui-serif, Georgia, serif;
-  --color-bg: #0a0a0a;
-  --color-surface: rgba(24, 24, 27, 0.55);
-  --color-border: rgba(63, 63, 70, 0.6);
-  --color-accent: #10b981;
-  --color-glow: #064e3b;
+  --color-bg: #09182f;
+  --color-navy-deep: #152040;
+  --color-navy-dark: #0e1f35;
+  --color-navy-midnight: #09182f;
+  --color-accent: #58e0d5;
+  --color-paper: #f5f7fa;
+  --color-nav-soft: #e3e8f0;
+  --color-muted: #8d9ab8;
+  --color-surface: rgba(21, 32, 64, 0.72);
+  --color-border: rgba(141, 154, 184, 0.22);
+  --color-glow: #58e0d5;
+  /* Legacy aliases */
+  --color-charcoal: #09182f;
 }
 
 /**
  * Hide vertical/horizontal scrollbars everywhere (Windows Chrome/Edge + Firefox + Safari).
- * Uses @layer base so Tailwind preflight doesn’t win the cascade.
  */
 @layer base {
   html {
-    /* `smooth` here fights scroll-linked JS and fixed UI; nav still uses scrollIntoView({ behavior: 'smooth' }). */
     scroll-behavior: auto;
-    /* Matches section scroll-margin so native :target / hash jumps clear the fixed header */
     scroll-padding-top: calc(5.25rem + env(safe-area-inset-top, 0px));
     overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
@@ -35,7 +40,7 @@
     overflow-x: hidden;
     overscroll-behavior-x: none;
     background-color: var(--color-bg);
-    color: #fafafa;
+    color: var(--color-paper);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     scrollbar-width: none !important;
@@ -67,12 +72,10 @@
     background: transparent !important;
   }
 
-  /** Anchor targets clear fixed header + progress + notch / Dynamic Island */
   section[id] {
     scroll-margin-top: calc(5.25rem + env(safe-area-inset-top, 0px));
   }
 
-  /** Faster, more predictable taps on touch devices (no double-tap zoom wait on legacy engines) */
   button,
   [role='button'],
   a[href] {
@@ -87,121 +90,66 @@
 }
 
 ::selection {
-  background: rgba(16, 185, 129, 0.35);
-  color: #fff;
-}
-
-@media (pointer: fine) {
-  html.cursor-ai,
-  html.cursor-ai * {
-    cursor: none !important;
-  }
-
-  html.cursor-ai input,
-  html.cursor-ai textarea,
-  html.cursor-ai select,
-  html.cursor-ai [contenteditable='true'] {
-    cursor: text !important;
-  }
-}
-
-.ai-cursor-core,
-.ai-cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  will-change: transform;
-}
-
-.ai-cursor-core {
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 9999px;
-  background: #ecfdf5;
-  box-shadow:
-    0 0 0 1px rgba(16, 185, 129, 0.9),
-    0 0 16px 2px rgba(16, 185, 129, 0.55);
-  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease, margin 0.2s ease,
-    background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.ai-cursor-ring {
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
-  border-radius: 9999px;
-  border: 1px solid rgba(52, 211, 153, 0.45);
-  box-shadow: 0 0 24px -6px rgba(16, 185, 129, 0.35);
-  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease, border-color 0.22s ease,
-    opacity 0.2s ease, background-color 0.22s ease;
-}
-
-.ai-cursor-tick {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-color: #34d399;
-  border-style: solid;
-}
-
-.ai-cursor-tick-tl {
-  top: 4px;
-  left: 4px;
-  border-width: 1.5px 0 0 1.5px;
-}
-
-.ai-cursor-tick-tr {
-  top: 4px;
-  right: 4px;
-  border-width: 1.5px 1.5px 0 0;
-}
-
-.ai-cursor-tick-bl {
-  bottom: 4px;
-  left: 4px;
-  border-width: 0 0 1.5px 1.5px;
-}
-
-.ai-cursor-tick-br {
-  bottom: 4px;
-  right: 4px;
-  border-width: 0 1.5px 1.5px 0;
-}
-
-.ai-cursor[data-hover='true'] .ai-cursor-ring {
-  width: 64px;
-  height: 64px;
-  margin: -32px 0 0 -32px;
-  border-color: rgba(52, 211, 153, 0.85);
-  background: rgba(16, 185, 129, 0.08);
-}
-
-.ai-cursor[data-hover='true'] .ai-cursor-core {
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  background: #6ee7b7;
-}
-
-.ai-cursor[data-down='true'] .ai-cursor-ring {
-  width: 36px;
-  height: 36px;
-  margin: -18px 0 0 -18px;
-}
-
-.ai-cursor[data-text='true'] {
-  opacity: 0;
+  background: rgba(88, 224, 213, 0.28);
+  color: #f5f7fa;
 }
 
 @layer components {
-  /** Centered column: readable on laptops / ultrawide; still full-width on phones */
   .page-container {
     @apply mx-auto w-full min-w-0 max-w-[min(100%,90rem)] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20;
   }
 
-  /** Same teal gradient as About / Projects sections */
-  .section-bg-teal {
-    background-image: linear-gradient(135deg, #2e7f73, #1f5f5a, #0f2f33);
+  /** Consistent vertical rhythm for content sections */
+  .section-pad {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  /** Prevent long URLs, emails, and skill lists from overflowing on small screens */
+  .text-balance-wrap {
+    @apply min-w-0 break-words [overflow-wrap:anywhere];
+  }
+
+  /** iOS Safari: 16px+ inputs avoid focus zoom */
+  @media (max-width: 639px) {
+    .form-field-touch {
+      font-size: 16px;
+    }
+  }
+
+  /** Top navigation — darkest navy */
+  .surface-nav-gradient {
+    background-image: linear-gradient(90deg, #0e1f35 0%, #09182f 100%);
+  }
+
+  /** Hero — deep navy into dark navy */
+  .section-hero {
+    background-image: linear-gradient(135deg, #152040 0%, #0e1f35 55%, #09182f 100%);
+  }
+
+  /** Alternating content sections */
+  .section-bg-navy {
+    background-image: linear-gradient(135deg, #152040 0%, #0e1f35 52%, #09182f 100%);
+  }
+
+  .section-bg-navy-alt {
+    background-image: linear-gradient(160deg, #0e1f35 0%, #152040 45%, #09182f 100%);
+  }
+
+  /** Hover highlight for list rows (black sections) */
+  .hover-row-light {
+    @apply rounded-sm py-1 transition-all duration-200 ease-out;
+  }
+
+  .hover-row-light:hover {
+    @apply bg-white/[0.05] pl-1;
+  }
+
+  /** Hover highlight for list rows (navy sections) */
+  .hover-row-accent {
+    @apply rounded-sm py-1 transition-all duration-200 ease-out;
+  }
+
+  .hover-row-accent:hover {
+    @apply bg-accent/[0.06] pl-1;
   }
 }

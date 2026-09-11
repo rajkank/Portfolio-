@@ -1,9 +1,6 @@
 import { useEffect } from 'react'
-import { LoaderGateProvider } from './context/LoaderGate.jsx'
-import PageLoader from './components/PageLoader.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
-import About from './components/About.jsx'
 import Experience from './components/Experience.jsx'
 import Projects from './components/Projects.jsx'
 import Skills from './components/Skills.jsx'
@@ -11,15 +8,11 @@ import Education from './components/Education.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import BackgroundGlow from './components/BackgroundGlow.jsx'
-import AiCursor from './components/AiCursor.jsx'
 import { scrollToSection } from './utils/scrollToSection.js'
-import { useLoaderGate } from './context/LoaderGate.jsx'
 
-/** If the site opens as `.../#contact` (bookmark / share), jump after the loader unlocks scroll/layout. */
+/** If the site opens as `.../#contact` (bookmark / share), jump to that section on load. */
 function ScrollToHashOnLoad() {
-  const { heroAnimationReady } = useLoaderGate()
   useEffect(() => {
-    if (!heroAnimationReady) return
     const raw = window.location.hash
     if (!raw || raw.length <= 1) return
     let id
@@ -32,22 +25,19 @@ function ScrollToHashOnLoad() {
 
     const t = window.setTimeout(() => scrollToSection(id), 80)
     return () => window.clearTimeout(t)
-  }, [heroAnimationReady])
+  }, [])
+
   return null
 }
 
 export default function App() {
   return (
-    <LoaderGateProvider>
-    <div className="relative min-h-screen min-h-dvh min-w-0 overflow-x-hidden bg-[#0a0a0a] text-zinc-100">
+    <div className="relative min-h-screen min-h-dvh min-w-0 overflow-x-hidden bg-navy-midnight text-paper">
       <ScrollToHashOnLoad />
-      <PageLoader />
-      <AiCursor />
       <BackgroundGlow />
       <Navbar />
-      <main className="relative min-w-0 isolate">
+      <main className="relative isolate min-w-0 overflow-x-hidden">
         <Hero />
-        <About />
         <Experience />
         <Projects />
         <Skills />
@@ -56,6 +46,5 @@ export default function App() {
       </main>
       <Footer />
     </div>
-    </LoaderGateProvider>
   )
 }

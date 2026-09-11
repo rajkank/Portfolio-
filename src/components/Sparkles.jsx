@@ -14,7 +14,7 @@ export default function Sparkles() {
       {positions.map((p, i) => (
         <SparklesIcon
           key={i}
-          className="absolute text-emerald-400/80"
+          className="absolute text-paper/70"
           style={{
             top: p.top,
             left: p.left,

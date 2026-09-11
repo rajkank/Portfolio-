@@ -2,16 +2,18 @@
 export const site = {
   name: 'Raj Sudhir Kank',
   nameDisplay: 'RAJ SUDHIR KANK',
+  /** Shown in the top navigation bar */
+  navName: 'Raj Kank',
   location: 'Mumbai, India',
   title: 'AI Engineer',
   focus: 'Generative AI, LLMs, Machine Learning',
   email: 'kankraj24@gmail.com',
   phone: '+91 8446730959',
   /** Profile image in /public */
-  profileImage: '/profile.jpeg',
-  /** Resume PDF in /public — keep filename in sync with the actual file */
+  profileImage: '/images/Profile/rajkank.jpeg',
+  /** Resume PDF in /public/document/Resume — keep filename in sync with the actual file */
   resume: {
-    pdfPath: '/RAJ SUDHIR KANK.pdf',
+    pdfPath: '/document/Resume/RAJ SUDHIR KANK.pdf',
     downloadFileName: 'Raj-Sudhir-Kank-Resume.pdf',
     /** Shown on the Download option before the user taps */
     downloadDescription:
@@ -21,13 +23,22 @@ export const site = {
       'Your download should begin in a moment. If nothing happens, check that downloads are allowed for this site, then look in your Downloads folder — the file is saved as',
   },
   social: {
-    /** Order: LinkedIn → GitHub → Kaggle */
+    /** Order: LinkedIn → GitHub → Kaggle → Instagram */
     linkedin: 'https://www.linkedin.com/in/rajkank/',
     github: 'https://github.com/rajkank',
     kaggle: 'https://www.kaggle.com/rajkank',
+    instagram: 'https://www.instagram.com/_rajkank/',
+    instagramHandle: '_rajkank',
   },
   tagline:
     'Production-ready RAG pipelines, semantic search, and LLM-powered systems that improve how businesses operate.',
+  /** Hero section — left column */
+  hero: {
+    role: 'AI Engineer',
+    headline: 'Turning AI ideas into intelligent, real-world products.',
+    intro:
+      'I build Generative AI applications, LLM-powered systems, RAG pipelines, and AI agents designed to solve meaningful business problems.',
+  },
   /** About section — full bio only */
   aboutBio:
     'AI Engineer specializing in Generative AI and LLM-powered systems, with hands-on experience building production-ready RAG pipelines, semantic search, and enterprise chatbots. Proficient in LangChain, prompt engineering, and LLM integration (OpenAI, Claude, Gemini), backed by strong Machine Learning, NLP, and Computer Vision expertise for document intelligence and automation. Experienced in designing scalable AI architectures and REST APIs that improve business processes and operational efficiency.',
@@ -156,7 +167,7 @@ export const skillCategories = [
   },
   {
     id: 'ml',
-    title: 'Machine Learning',
+    title: 'Machine Learning (Foundational)',
     items: [
       'Scikit-learn',
       'TensorFlow',
@@ -232,10 +243,10 @@ export const education = [
 ]
 
 export const navLinks = [
-  { id: 'about', label: 'About' },
+  { id: 'hero', label: 'Me' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
-  { id: 'education', label: 'Education' },
-  { id: 'contact', label: 'Contact' },
 ]
+
+export const navCta = { id: 'contact', label: "Let's Talk" }

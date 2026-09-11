@@ -1,193 +1,114 @@
-import { motion, useReducedMotion } from 'framer-motion'
-import { Bot, Briefcase, ChevronRight, Clock, Users } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 import { experience } from '../data/site.js'
-import GlassCard from './GlassCard.jsx'
-import SectionHeading from './SectionHeading.jsx'
+import MotionReveal, { MotionItem, MotionStagger } from './MotionReveal.jsx'
 
-const cardSpring = { type: 'spring', stiffness: 380, damping: 28 }
-
-const projectIconById = {
-  hrms: Users,
-  'time-flow': Clock,
-  'enterprise-chatbot': Bot,
-}
-
-function HighlightList({ id, items }) {
+function BulletList({ items }) {
   return (
-    <ul className="mt-5 space-y-3 border-t border-zinc-800/70 pt-5">
+    <ul className="mt-3 space-y-1 text-sm leading-relaxed text-white/80 sm:text-[15px]">
       {items.map((line, i) => (
-        <li
-          key={`${id}-${i}`}
-          className="group/line flex gap-3 text-sm text-zinc-400 transition-colors duration-200 hover:text-zinc-200"
-        >
-          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/50 text-emerald-500/70 transition-colors group-hover:border-emerald-500/25 group-hover:text-emerald-400/90 group-hover/line:border-emerald-500/30">
-            <ChevronRight className="h-3 w-3" aria-hidden />
+        <li key={i} className="group hover-row-light flex gap-3">
+          <span
+            className="mt-[0.55rem] text-white/45 transition-all duration-200 group-hover:text-white group-hover:translate-x-0.5"
+            aria-hidden
+          >
+            →
           </span>
-          <span className="leading-relaxed [text-wrap:pretty]">{line}</span>
+          <span className="transition-all duration-200 group-hover:text-white group-hover:translate-x-0.5 text-balance-wrap min-w-0 flex-1">
+            {line}
+          </span>
         </li>
       ))}
     </ul>
   )
 }
 
-function RoleHeader({ job, index }) {
-  return (
-    <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
-      <div className="flex min-w-0 flex-1 gap-4">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-zinc-700/80 bg-zinc-900/70 text-emerald-400 shadow-inner transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-500/40 group-hover:text-emerald-300 group-hover:shadow-[0_0_24px_-4px_rgba(16,185,129,0.35)]">
-          <Briefcase className="h-5 w-5" aria-hidden />
-        </span>
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-500/70">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-          </div>
-          <h3 className="mt-1 flex flex-col gap-1 font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-0 sm:text-xl md:text-2xl">
-            <span>{job.role}</span>
-            <span className="hidden font-sans font-normal text-zinc-500 sm:inline sm:px-1">
-              —
-            </span>
-            <span className="text-emerald-400/95">{job.company}</span>
-          </h3>
-        </div>
-      </div>
-
-      <div className="shrink-0 sm:pt-1">
-        <span className="inline-flex items-center rounded-full border border-zinc-700/80 bg-zinc-950/60 px-3 py-1.5 font-mono text-[11px] text-zinc-400 transition-colors duration-300 group-hover:border-emerald-500/30 group-hover:text-emerald-200/90 sm:text-xs">
-          {job.period}
-        </span>
-      </div>
-    </div>
-  )
-}
-
-function CardChrome() {
-  return (
-    <>
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        aria-hidden
-      />
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.04] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-    </>
-  )
-}
-
 export default function Experience() {
-  const reduce = useReducedMotion()
-  const cardHover = reduce
-    ? undefined
-    : { y: -8, scale: 1.008, transition: cardSpring }
-
   return (
-    <section id="experience" className="w-full py-16 sm:py-20">
+    <section id="experience" className="section-pad w-full bg-black text-white">
       <div className="page-container">
-        <SectionHeading
-          eyebrow="Experience"
-          title="Where I’ve shipped AI"
-          description="AI engineering at Rigved, plus internships in software development and analytics."
-        />
+        <MotionReveal as="header" className="mb-10 max-w-2xl sm:mb-12">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/60">Experience</p>
+          <h2 className="mt-2 font-serif text-[clamp(1.75rem,4.8vw,2.25rem)] tracking-tight sm:text-4xl">
+            Where I&apos;ve shipped AI
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-white/70 sm:text-base">
+            AI engineering at Rigved, plus internships in software development and analytics.
+          </p>
+        </MotionReveal>
 
         <div className="relative">
           <div
-            className="absolute left-[19px] top-3 bottom-3 hidden w-px overflow-hidden sm:block md:left-[22px]"
+            className="absolute left-[11px] top-2 bottom-2 hidden w-px bg-white/20 sm:block"
             aria-hidden
-          >
-            <div className="h-full w-full bg-gradient-to-b from-emerald-500/60 via-emerald-500/20 to-transparent" />
-          </div>
+          />
 
-          <ul className="relative space-y-8 md:space-y-10">
+          <MotionStagger as="ol" className="space-y-0" stagger={0.12}>
             {experience.map((job, index) => {
-              const hasProjects = Boolean(job.projects?.length)
+              const isLast = index === experience.length - 1
 
               return (
-                <motion.li
-                  key={job.id}
-                  className="relative pl-0 sm:pl-2 md:pl-0"
-                  initial={reduce ? false : { opacity: 0, y: 48 }}
-                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-10% 0px -6% 0px', amount: 0.12 }}
-                  transition={{
-                    duration: 0.52,
-                    delay: index * 0.08,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
-                >
-                  <span
-                    className="absolute left-0 top-7 z-10 hidden h-4 w-4 rounded-full border-2 border-emerald-400 bg-[#0a0a0a] shadow-[0_0_20px_rgba(52,211,153,0.55)] sm:flex sm:items-center sm:justify-center md:left-[14px] md:top-8"
-                    aria-hidden
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  </span>
+                <MotionItem key={job.id} as="li" className="relative">
+                  <article className="group/job relative pb-10 transition-colors duration-300 sm:pb-12 sm:pl-10 sm:hover:pl-11">
+                    <span
+                      className="absolute left-0 top-1.5 hidden h-[22px] w-[22px] items-center justify-center rounded-full border border-white/35 bg-black transition-all duration-300 group-hover/job:border-white/70 sm:flex"
+                      aria-hidden
+                    >
+                      <span className="h-2 w-2 rounded-full bg-white transition-transform duration-300 group-hover/job:scale-125" />
+                    </span>
 
-                  <div className="sm:ml-10 md:ml-14">
-                    {hasProjects ? (
-                      <div className="space-y-4">
-                        <motion.div
-                          className="group"
-                          whileHover={cardHover}
-                          style={{ transformOrigin: 'center top' }}
-                        >
-                          <GlassCard className="relative overflow-hidden border-zinc-800/80 p-0 transition-colors duration-300 group-hover:border-emerald-500/35 group-hover:shadow-[0_24px_60px_-20px_rgba(16,185,129,0.18)]">
-                            <CardChrome />
-                            <div className="relative p-6 sm:p-8">
-                              <RoleHeader job={job} index={index} />
-                            </div>
-                          </GlassCard>
-                        </motion.div>
-
-                        <div className="grid gap-4">
-                          {job.projects.map((project) => {
-                            const ProjectIcon = projectIconById[project.id] ?? Briefcase
-                            return (
-                              <motion.article
-                                key={project.id}
-                                className="group h-full"
-                                whileHover={cardHover}
-                                style={{ transformOrigin: 'center top' }}
-                              >
-                                <GlassCard className="relative flex h-full flex-col overflow-hidden border-zinc-800/80 p-0 transition-colors duration-300 group-hover:border-emerald-500/35 group-hover:shadow-[0_24px_60px_-20px_rgba(16,185,129,0.18)]">
-                                  <CardChrome />
-                                  <div className="relative flex h-full flex-col p-5 sm:p-6">
-                                    <div className="flex items-center gap-3">
-                                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-zinc-700/80 bg-zinc-900/70 text-emerald-400 shadow-inner transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-500/40 group-hover:text-emerald-300 group-hover:shadow-[0_0_24px_-4px_rgba(16,185,129,0.35)]">
-                                        <ProjectIcon className="h-5 w-5" aria-hidden />
-                                      </span>
-                                      <h4 className="font-serif text-lg font-semibold leading-snug tracking-tight text-white sm:text-xl">
-                                        {project.title}
-                                      </h4>
-                                    </div>
-                                    <HighlightList id={project.id} items={project.highlights} />
-                                  </div>
-                                </GlassCard>
-                              </motion.article>
-                            )
-                          })}
-                        </div>
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+                      <div className="min-w-0">
+                        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/45 sm:hidden">
+                          {job.period}
+                        </p>
+                        <h3 className="text-base font-semibold leading-snug sm:text-lg md:text-xl">
+                          <span className="block sm:inline">{job.role}</span>
+                          <span className="hidden font-normal text-white/50 sm:inline"> · </span>
+                          <span className="block text-white/90 sm:inline sm:text-inherit">{job.company}</span>
+                        </h3>
                       </div>
-                    ) : (
-                      <motion.div
-                        className="group"
-                        whileHover={cardHover}
-                        style={{ transformOrigin: 'center top' }}
-                      >
-                        <GlassCard className="relative overflow-hidden border-zinc-800/80 p-0 transition-colors duration-300 group-hover:border-emerald-500/35 group-hover:shadow-[0_24px_60px_-20px_rgba(16,185,129,0.18)]">
-                          <CardChrome />
-                          <div className="relative p-6 sm:p-8">
-                            <RoleHeader job={job} index={index} />
-                            {job.highlights?.length ? (
-                              <HighlightList id={job.id} items={job.highlights} />
-                            ) : null}
+                      <p className="hidden shrink-0 text-sm text-white/60 sm:block">{job.period}</p>
+                    </div>
+
+                    {job.projects?.length ? (
+                      <div className="mt-5 space-y-6 border-l border-white/15 pl-4 transition-colors duration-300 group-hover/job:border-white/35 sm:ml-1 sm:pl-5">
+                        {job.projects.map((project) => (
+                          <div key={project.id} className="group/project">
+                            <h4 className="flex min-w-0 items-start gap-2 text-base font-medium text-white transition-colors duration-200 group-hover/project:text-white sm:text-lg">
+                              <span
+                                className="mt-0.5 shrink-0 text-white/45 transition-all duration-200 group-hover/project:text-white group-hover/project:translate-x-0.5"
+                                aria-hidden
+                              >
+                                ›
+                              </span>
+                              <span className="text-balance-wrap">{project.title}</span>
+                            </h4>
+                            <BulletList items={project.highlights} />
                           </div>
-                        </GlassCard>
-                      </motion.div>
-                    )}
-                  </div>
-                </motion.li>
+                        ))}
+                      </div>
+                    ) : job.highlights?.length ? (
+                      <div className="mt-4 border-l border-white/15 pl-4 transition-colors duration-300 group-hover/job:border-white/35 sm:ml-1 sm:pl-5">
+                        <BulletList items={job.highlights} />
+                      </div>
+                    ) : null}
+                  </article>
+
+                  {!isLast ? (
+                    <div className="relative flex items-center pb-2 sm:pl-10">
+                      <span
+                        className="absolute left-[3px] top-1/2 hidden -translate-y-1/2 sm:flex sm:h-7 sm:w-7 sm:items-center sm:justify-center sm:rounded-full sm:border sm:border-white/20 sm:bg-black"
+                        aria-hidden
+                      >
+                        <ArrowDown className="h-3.5 w-3.5 text-white/55" strokeWidth={2} />
+                      </span>
+                      <div className="hidden h-px flex-1 bg-white/10 sm:block" aria-hidden />
+                    </div>
+                  ) : null}
+                </MotionItem>
               )
             })}
-          </ul>
+          </MotionStagger>
         </div>
       </div>
     </section>

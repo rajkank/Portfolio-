@@ -5,21 +5,21 @@ export default function SectionHeading({ eyebrow, title, description, variant = 
   const isGradient = variant === 'gradient'
 
   const eyebrowClass = isLight
-    ? 'text-emerald-800/90'
+    ? 'text-accent/90'
     : isGradient
-      ? 'text-emerald-100/80'
-      : 'text-emerald-400/90'
+      ? 'text-accent/80'
+      : 'text-accent/90'
 
-  const titleClass = isLight ? 'text-zinc-900' : 'text-white'
+  const titleClass = isLight ? 'text-navy-midnight' : 'text-paper'
 
   const descClass = isLight
-    ? 'text-zinc-700'
+    ? 'text-muted'
     : isGradient
-      ? 'text-zinc-200/90'
-      : 'text-zinc-400'
+      ? 'text-paper/85/90'
+      : 'text-muted'
 
   return (
-    <MotionReveal className="mb-8 max-w-2xl sm:mb-12">
+    <MotionReveal className="mb-8 max-w-2xl min-w-0 sm:mb-12">
       {eyebrow ? (
         <p className={`mb-2 text-xs font-semibold uppercase tracking-[0.2em] ${eyebrowClass}`}>
           {eyebrow}

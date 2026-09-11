@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
  * Updates width via transform (GPU-friendly) and batches reads with rAF — avoids
  * React re-rendering on every scroll tick (major source of main-thread jank).
  */
-export default function ScrollProgressBar() {
+export default function ScrollProgressBar({ scrolled = false }) {
   const barRef = useRef(null)
   const rafRef = useRef(0)
 
@@ -38,13 +38,15 @@ export default function ScrollProgressBar() {
 
   return (
     <div
-      className="relative h-1 w-full shrink-0 overflow-hidden bg-zinc-900/90"
+      className={`relative h-1 w-full shrink-0 overflow-hidden transition-colors duration-300 ${
+        scrolled ? 'bg-muted/12' : 'bg-black/20'
+      }`}
       role="presentation"
       aria-hidden
     >
       <div
         ref={barRef}
-        className="h-full origin-left bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-400 will-change-transform"
+        className="h-full origin-left bg-gradient-to-r from-accent/70 via-accent to-accent/90 will-change-transform"
         style={{ transform: 'scaleX(0)' }}
       />
     </div>

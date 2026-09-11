@@ -1,4 +1,4 @@
-import { handleContactRequest } from '../portfolio-web/server/contactHandler.js'
+import { handleContactRequest } from '../server/contactHandler.js'
 
 export const config = { runtime: 'nodejs' }
 

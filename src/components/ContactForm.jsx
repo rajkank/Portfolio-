@@ -7,7 +7,6 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const empty = {
   name: '',
   email: '',
-  subject: '',
   message: '',
   website: '',
 }
@@ -25,7 +24,7 @@ function validate(values) {
 }
 
 const fieldClass =
-  'w-full rounded-xl border border-zinc-800 bg-zinc-950/70 px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/25 disabled:opacity-60'
+  'form-field-touch w-full min-w-0 rounded-xl border border-muted/20 bg-navy-midnight/70 px-4 py-3 text-sm text-paper placeholder:text-muted/80 outline-none transition-colors focus:border-accent/50 focus:ring-1 focus:ring-accent/25 disabled:opacity-60 sm:text-sm'
 
 export default function ContactForm() {
   const [values, setValues] = useState(empty)
@@ -54,7 +53,6 @@ export default function ContactForm() {
       await sendContact({
         name: values.name.trim(),
         email: values.email.trim(),
-        subject: values.subject.trim(),
         message: values.message.trim(),
         honeypot: values.website.trim(),
       })
@@ -73,11 +71,11 @@ export default function ContactForm() {
   if (status === 'success') {
     return (
       <div className="flex flex-col items-center px-2 py-10 text-center sm:py-12">
-        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/30 bg-accent/10 text-accent">
           <CheckCircle2 className="h-7 w-7" aria-hidden />
         </span>
-        <h3 className="mt-5 font-serif text-2xl text-white">Message sent</h3>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-zinc-400">
+        <h3 className="mt-5 font-serif text-2xl text-paper">Message sent</h3>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
           Thanks for reaching out. I received your note, and you should get a confirmation email
           shortly. I typically reply within a day.
         </p>
@@ -87,7 +85,7 @@ export default function ContactForm() {
             setStatus('idle')
             setFormError('')
           }}
-          className="mt-7 rounded-full border border-zinc-700 bg-zinc-950/50 px-5 py-2.5 text-sm text-zinc-300 transition hover:border-emerald-500/40 hover:text-white"
+          className="mt-7 rounded-full border border-muted/25 bg-navy-midnight/50 px-5 py-2.5 text-sm text-muted transition hover:border-accent/40 hover:text-paper"
         >
           Send another message
         </button>
@@ -122,18 +120,6 @@ export default function ContactForm() {
           disabled={busy}
         />
       </div>
-
-      <Field
-        id="contact-subject"
-        name="subject"
-        label="Subject"
-        optional
-        autoComplete="off"
-        placeholder="What is this about?"
-        value={values.subject}
-        onChange={onChange}
-        disabled={busy}
-      />
 
       <Field
         id="contact-message"
@@ -173,13 +159,13 @@ export default function ContactForm() {
       ) : null}
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-relaxed text-zinc-500">
+        <p className="text-xs leading-relaxed text-muted/80">
           You’ll get a confirmation email. I read every message personally.
         </p>
         <button
           type="submit"
           disabled={busy}
-          className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-lg shadow-emerald-500/10 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+          className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-semibold text-navy-midnight shadow-lg shadow-accent/10 transition hover:bg-paper/90 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
         >
           {busy ? (
             <>
@@ -198,30 +184,15 @@ export default function ContactForm() {
   )
 }
 
-function Field({
-  id,
-  name,
-  label,
-  optional,
-  error,
-  as = 'input',
-  type = 'text',
-  ...rest
-}) {
+function Field({ id, name, label, error, as = 'input', type = 'text', ...rest }) {
   const Tag = as
   const describedBy = error ? `${id}-error` : undefined
 
   return (
     <div className="min-w-0">
-      <label htmlFor={id} className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-zinc-500">
+      <label htmlFor={id} className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-muted/80">
         {label}
-        {optional ? (
-          <span className="ml-2 font-sans text-[10px] font-normal normal-case tracking-normal text-zinc-600">
-            optional
-          </span>
-        ) : (
-          <span className="ml-1 text-emerald-500/80">*</span>
-        )}
+        <span className="ml-1 text-accent/80">*</span>
       </label>
       <Tag
         id={id}

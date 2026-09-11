@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { navLinks, site } from '../data/site.js'
+import { navLinks, navCta, site } from '../data/site.js'
 import ScrollProgressBar from './ScrollProgressBar.jsx'
 import { scrollToSection } from '../utils/scrollToSection.js'
 
@@ -82,7 +82,7 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)')
+    const mq = window.matchMedia('(min-width: 1024px)')
     const onViewportChange = () => {
       if (mq.matches) setOpen(false)
     }
@@ -110,10 +110,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 flex flex-col pt-[env(safe-area-inset-top,0px)] isolate transition-[background,box-shadow,border-color] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 flex flex-col pt-[env(safe-area-inset-top,0px)] isolate transition-[background,box-shadow,border-color,color] duration-300 ${
         scrolled
-          ? 'border-b border-zinc-800/80 bg-zinc-950/80 shadow-lg shadow-black/20 backdrop-blur-md'
-          : 'border-b border-white/12 bg-transparent shadow-[0_1px_0_0_rgba(255,255,255,0.06)]'
+          ? 'border-b border-muted/25 bg-nav-soft/95 shadow-sm shadow-navy-midnight/8 backdrop-blur-md'
+          : 'surface-nav-gradient border-b border-paper/20 shadow-[0_1px_0_0_rgba(255,255,255,0.12)]'
       }`}
     >
       {mounted &&
@@ -128,7 +128,7 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.22 }}
-                className="fixed inset-0 z-[45] cursor-default border-0 bg-black/55 backdrop-blur-[3px] md:hidden"
+                className="fixed inset-0 z-[45] cursor-default border-0 bg-black/55 backdrop-blur-[3px] lg:hidden"
                 onClick={closeMenu}
               />
             )}
@@ -136,16 +136,22 @@ export default function Navbar() {
           document.body,
         )}
 
-      <ScrollProgressBar />
+      <ScrollProgressBar scrolled={scrolled} />
       <div className="page-container flex h-16 max-w-none items-center justify-between">
         <button
           type="button"
           onClick={() => scrollToSection('hero')}
           className="group flex items-center gap-2 text-left"
         >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-700/80 bg-zinc-900/60 transition group-hover:border-emerald-500/40">
+          <span
+            className={`flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border transition ${
+              scrolled
+                ? 'border-muted/30 bg-navy-midnight/6 group-hover:border-muted/45'
+                : 'border-paper/25 bg-paper/10 group-hover:border-paper/45'
+            }`}
+          >
             <img
-              src="/favicon.svg"
+              src="/favicon.ico"
               alt=""
               width={36}
               height={36}
@@ -153,32 +159,58 @@ export default function Navbar() {
               decoding="async"
             />
           </span>
-          <span className="hidden flex-col sm:flex">
-            <span className="text-sm font-semibold text-white">{site.name}</span>
-            <span className="text-[11px] text-zinc-500">{site.title}</span>
+          <span className="min-w-0 max-w-[9.5rem] truncate sm:max-w-none">
+            <span
+              className={`block truncate text-sm font-semibold transition-colors ${
+                scrolled ? 'text-navy-midnight' : 'text-paper'
+              }`}
+            >
+              {site.navName}
+            </span>
           </span>
         </button>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1" aria-label="Primary">
           {navLinks.map((link) => (
             <button
               key={link.id}
               type="button"
               onClick={() => scrollToSection(link.id)}
-              className="group relative rounded-full px-3 py-1.5 text-sm text-zinc-400 transition hover:bg-zinc-800/60 hover:text-white"
+              className={`group relative shrink-0 rounded-full px-2.5 py-1.5 text-sm transition-colors xl:px-3 ${
+                scrolled ? 'text-navy-dark/85' : 'text-paper/80'
+              }`}
             >
               <span className="relative z-10">{link.label}</span>
               <span
-                className="pointer-events-none absolute inset-x-3 bottom-1.5 h-[2px] origin-center scale-x-0 rounded-full bg-gradient-to-r from-emerald-400/30 via-emerald-400 to-teal-500/70 shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-transform duration-300 ease-out group-hover:scale-x-100"
+                className={`pointer-events-none absolute inset-x-3 bottom-1.5 h-[2px] origin-center scale-x-0 rounded-full transition-transform duration-300 ease-out group-hover:scale-x-100 ${
+                  scrolled
+                    ? 'bg-gradient-to-r from-accent/40 via-accent to-accent/70 shadow-[0_0_12px_rgba(88,224,213,0.35)]'
+                    : 'bg-gradient-to-r from-paper/40 via-paper to-paper/70 shadow-[0_0_12px_rgba(255,255,255,0.35)]'
+                }`}
                 aria-hidden
               />
             </button>
           ))}
+          <button
+            type="button"
+            onClick={() => scrollToSection(navCta.id)}
+            className={`ml-2 shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold transition xl:ml-5 xl:px-4 ${
+              scrolled
+                ? 'bg-navy-midnight text-paper hover:bg-navy-dark'
+                : 'bg-paper text-navy-midnight hover:bg-paper/90'
+            }`}
+          >
+            {navCta.label}
+          </button>
         </nav>
 
         <motion.button
           type="button"
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-200 md:hidden"
+          className={`relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition lg:hidden ${
+            scrolled
+              ? 'border-muted/30 bg-navy-midnight/6 text-navy-midnight'
+              : 'border-paper/20 bg-paper/10 text-paper'
+          }`}
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
@@ -216,10 +248,10 @@ export default function Navbar() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="relative z-[51] border-b border-emerald-500/15 bg-gradient-to-b from-zinc-950/98 via-zinc-950/95 to-zinc-950/90 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.65)] backdrop-blur-xl md:hidden"
+            className="relative z-[51] border-b border-paper/15 surface-nav-gradient shadow-[0_24px_48px_-12px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:hidden"
           >
             <div
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/35 to-transparent"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-paper/35 to-transparent"
               aria-hidden
             />
             <motion.div
@@ -238,15 +270,26 @@ export default function Navbar() {
                     pendingSectionIdRef.current = link.id
                     setOpen(false)
                   }}
-                  className="group relative min-h-11 rounded-xl px-3 py-3 text-left text-base text-zinc-100 transition-colors hover:bg-emerald-500/10 hover:text-white sm:min-h-0 sm:text-sm"
+                  className="group relative min-h-11 rounded-xl px-3 py-3 text-left text-base text-paper sm:min-h-0 sm:text-sm"
                 >
                   <span className="relative z-10">{link.label}</span>
                   <span
-                    className="pointer-events-none absolute inset-x-3 bottom-2 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-emerald-400/40 via-emerald-400 to-teal-500/60 shadow-[0_0_12px_rgba(52,211,153,0.35)] transition-transform duration-300 ease-out group-hover:scale-x-100 group-active:scale-x-100"
+                    className="pointer-events-none absolute inset-x-3 bottom-2 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-paper/40 via-paper to-paper/70 shadow-[0_0_12px_rgba(255,255,255,0.35)] transition-transform duration-300 ease-out group-hover:scale-x-100 group-active:scale-x-100"
                     aria-hidden
                   />
                 </motion.button>
               ))}
+              <motion.button
+                type="button"
+                variants={linkVariants}
+                onClick={() => {
+                  pendingSectionIdRef.current = navCta.id
+                  setOpen(false)
+                }}
+                className="mt-2 min-h-11 rounded-full bg-paper px-4 py-3 text-center text-base font-semibold text-navy-midnight transition hover:bg-paper/90 sm:text-sm"
+              >
+                {navCta.label}
+              </motion.button>
             </motion.div>
           </motion.div>
         ) : null}

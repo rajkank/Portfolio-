@@ -11,10 +11,10 @@ export default function ResumeHeroButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-zinc-600 bg-zinc-900/40 px-6 py-3.5 text-sm font-medium text-white transition hover:border-emerald-500/40 hover:bg-zinc-800/60 sm:w-auto sm:py-3"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-muted/30 bg-navy-deep/40 px-6 py-3.5 text-sm font-medium text-paper transition hover:border-accent/40 hover:bg-navy-deep/60 sm:w-auto sm:py-3"
       >
         <FileText className="h-4 w-4" />
-        Resume
+        Check Out My Resume
       </button>
       <ResumeModal open={open} onClose={() => setOpen(false)} />
     </>
